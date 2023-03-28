@@ -66,78 +66,7 @@
 
 <body>
     <!-- 頂端導覽 -->
-    <section>
-        <div class="bg-light" id="bgc">
-            <div class="container">
-                <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light" data-bs-theme="light" id="ftc">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="#">
-                            <i class="fa-solid fa-cake-candles"></i>
-                        </a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="Home.html">首頁</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#s06">分類</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#s09">app下載</a>
-                                </li>
-                                <li class="nav-item dropdown ">
-                                    <a class="nav-link dropdown-toggle text-danger fw-bold" href="#" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        會員功能
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item " href="myubook_R.html?id=XXX" id="link_control"
-                                                style="display: none;">後臺管理</a></li>
-                                        <li><a class="dropdown-item" href="團員管理.html" id="link_control01"
-                                                style="display: none;">團員管理</a></li>
-                                        <li><a class="dropdown-item" href="專輯管理.html" id="link_control02"
-                                                style="display: none;">專輯管理</a></li>
-                                        <li><a class="dropdown-item" href="20230207-maskmap.html" id="link_control03"
-                                                style="display: none;">口罩地圖</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <!-- 背景紐 -->
-                            <div class="form-check form-switch fs-4 mb-2 mb-lg-0">
-                                <input type="checkbox" id="bgc_btn" name="bgc_btn " class="form-check-input bgc_btn"
-                                    role="switch" " data-on=" warning" data-off="warning">
-                                <label for=" bgc_btn" class="form-check-label"></label>
-                            </div>
-                            <!-- 搜索欄 --ok-->
-                            <div class="form-check rounded-pill mb-3 mb-lg-0"
-                                style="background-color: #d4d3d3; border: 0cm;height: 40px;width: 250px;">
-                                <input type="text" name="search" id="search" placeholder="請輸入關鍵字" autocomplete="off"
-                                    class="search mt-2"
-                                    style="background-color: var(--mycolor16);border: 0cm;border-color: #d4d3d3;">
-                                <a href="#s06" class="link-dark">
-                                    <button type="submit" class="search btn rounded-pill"
-                                        style="background-color:transparent;border: 0cm; ">
-                                        <i class="fa-solid fa-magnifying-glass  mb-2"></i></button></a>
-                            </div>
-                            <!-- 登入 註冊 -->
-                            <div class="mb-2 mb-lg-0">
-                                <form class="d-flex me-2" role="search">
-                                    <span class=" text-warning fw-400 fs-3 me-2" id="login_member"></span>
-                                    <button class="btn btn-danger me-2" type="button" id="logout_btn"
-                                        style="display: none;">登出</button>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </div>
+    <section id="top">
     </section>
     <div class="container">
         <!-- 小說資訊 -->
@@ -224,28 +153,8 @@
         // var key;
 
         $(function () {
-            often();
-            if (getCookie("UID01") != "" && getCookie("UID02") != "") {
-                //傳遞至後端 驗證uid
-                var jsonData = {};
-                jsonData["uid01"] = getCookie("UID01");
-                jsonData["uid02"] = getCookie("UID02");
-                console.log(JSON.stringify(jsonData));
-                $.ajax({
-                    type: "POST",
-                    url: "mem_uid_check_api.php",
-                    data: JSON.stringify(jsonData),
-                    dataType: "json",
-                    async: false,
-                    success: showdata_uid_check,
-                    error: function () {
-                        alert("error-mem_uid_check_api.php");
-                    }
-                });
-            } else {
-                alert("請先登入會員!");
-                location.href = "Home.html";
-            }
+            top01();
+          
 
             console.log(location.href);
             console.log(location.href.split("=")[3]);
@@ -354,39 +263,7 @@
                 }
             });
         }
-        function showdata_uid_check(data) {
-            console.log(data);
-            if (data.state) {
-                console.log(data.data[0].ID);
-                //uid合法 驗證成功
-                u_id = location.href.split("=")[1]; //取得網址id
-                chap_id = location.href.split("=")[3]; //取得網址章節id
-                //確認是否有權限瀏覽畫面
-                if (data.data[0].ID == u_id) {
-                    // console.log(data)
-                    $("#login_member").text(data.data[0].Username + "會員您好!");
 
-                    //顯示登出按鈕
-                    $("#logout_btn").show();
-
-                    //顯示會員選項按鈕
-                    $("#link_control").show();
-                    $("#link_control01").show();
-                    $("#link_control02").show();
-                    $("#link_control03").show();
-
-                    $("#article_C").attr("href", "article_C.html?id=" + u_id + '=bl_id=' + chapter_Bl_id + '');
-
-                } else {
-                    alert("沒有權限!");
-                    location.href = "Home.html";
-                }
-            } else {
-                //uid 驗證失敗
-                alert("請先登入會員!");
-                location.href = "Home.html";
-            }
-        }
         function showdata_delete(data) {
             console.log(data);
             if (data.state) {
@@ -399,29 +276,7 @@
             }
         }
 
-        //form w3c
-        function setCookie(cname, cvalue, exdays) {
-            const d = new Date();
-            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-            let expires = "expires=" + d.toUTCString();
-            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-        }
-        //form w3c
-        function getCookie(cname) {
-            let name = cname + "=";
-            let decodedCookie = decodeURIComponent(document.cookie);
-            let ca = decodedCookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-            return "";
-        }
+
     </script>
 
 </body>

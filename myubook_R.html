@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小說列表</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/myall.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <style>
+        /* 取消輸入的框框 */
+        .search:focus,
+        .search:active {
+            outline: none;
+            /* color: black; */
+        }
+
+        .bgc_btn:active,
+        .bgc_btn:focus {
+            appearance: none;
+            outline: none;
+            border-color: #d4d3d3;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, .2);
+            color: #d4d3d3;
+        }
+    </style>
+</head>
+
+<body>
+     <!-- 頂端 -->
+     <section id="top">
+    </section>
+    <div class="container">
+        <a href="myulbook_C.html?id=XXX" class="btn btn-warning" id="myulbook_C">建立資料</a>
+        <div class="card mb-3 " id="mybody">
+            <div class="row g-0 ">
+                <!-- 圖片 -->
+                <div class="col-4 col-md-4  text-center">
+                    <div class="img-fluid bg-cover" style="background-image: url(img/13.jpg); height: 300px;">
+                    </div>
+                </div>
+                <div class="col-8 col-md-8">
+                    <div class="card-body">
+                        <!-- 資訊 -->
+                        <div>
+                            <h3 class="card-title ">書名</h3>
+                            <div class="row">
+                                <div class="col-md-7 mt-3">
+                                    <p class="card-text">作者：123</p>
+                                </div>
+                                <div class="col-md-5 mt-3">
+                                    <p class="card-text">狀態：</p>
+                                </div>
+                            </div>
+
+                            <p class="card-text mt-3">最新章節：</p>
+                            <p class="card-text mt-3">標籤：</p>
+                            <p class="card-text mt-3">更新時間：</p>
+                            <p class="card-text mt-3">建立時間：</p>
+                            <!-- <p class="card-text mt-3"><small class="text-muted"></small></p> -->
+                        </div>
+                        <!-- 按鈕 -->
+                        <div class="text-end">
+                            <a href=article_R.html?id=XX&bl_id=XX" class="btn btn-outline-secondary me-2" data-bl_id="2"
+                                id="chapter_btn">進入章節</a>
+                            <a href="#" class="btn btn-outline-secondary me-2" data-bs-toggle="modal"
+                                data-bs-target="#updatamodal" data-mem_id="2" data-bl_id="2" data-title="123"
+                                data-author="456" data-statebl="完結" data-summary="789" data-tags_id="" data-myfile01=""
+                                id="update_btn">更新-modal</a>
+                            <a href="#" class="btn btn-outline-danger" data-bl_id="2" id="delete_btn" >刪除</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal -->
+    <div class="modal fade" id="updatamodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-light">
+                    <h1 class="modal-title fs-5 " id="exampleModalLabel">資訊更新</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="title">書名</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="">
+                        <div class="form-text" id="err_title"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="statebl">連載狀態</label>
+                        <select name="statebl" id="statebl" class="form-select form-select ">
+                            <!-- <option selected disabled></option> -->
+                            <option value="連載中">連載中</option>
+                            <option value="完結">完結</option>
+                            <!-- <div class="invalid-feedback">不可為空!</div> -->
+                            <div class="form-text" id="err_statebl"></div>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="summary">作者</label>
+                        <input type="text" class="form-control" id="author" name="author" placeholder="不可空白!">
+                        <div class="form-text" id="err_author"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="summary">簡介</label>
+                        <textarea type="text" class="form-control" id="summary" name="summary"
+                            placeholder="不可空白!"></textarea>
+                        <div class="form-text" id="err_summary"></div>
+                    </div>
+                    <!-- 標籤 -->
+                    <!-- <div class="mb-3">
+                        <label for="summary">標籤</label>
+                        <div class="   ">
+                            <div class="row ">
+                                <div class=" col-4  ">
+                                    <div class="form-check">
+                                        <input type="checkbox" id="check_tag02" name="tags_id" class="form-check-input"
+                                            value="古風">
+                                        <label for="check_tag02" class="form-check-label">古風</label>
+                                    </div>
+                                </div>
+                                <div class=" col-4  ">
+                                    <div class="form-check">
+                                        <input type="checkbox" id="check_tag05" name="tags_id" class="form-check-input"
+                                            value="追妻火葬場">
+                                        <label for="check_tag05" class="form-check-label">追妻火葬場</label>
+                                    </div>
+                                </div>
+                                <div class=" col-4 ">
+                                    <div class="form-check">
+                                        <input type="checkbox" id="check_tag02" name="tags_id" class="form-check-input"
+                                            value="刑偵推理">
+                                        <label for="check_tag02" class="form-check-label">刑偵推理</label>
+                                        <div class="form-text" id="err_tags_id"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- 封面 -->
+                    <div class="mb-3">
+                        <label for="myfile01">封面</label>
+                        <div class="">
+                            <form action="" method="post" enctype="multipart/form-data" id="form_img" name="form_img">
+                                <!-- 限制上傳檔案的最大值 -->
+                                <input type="hidden" name="MAX_FILE_SIZE" value="2097152">
+
+
+                                <!-- accept 限制上傳檔案類型 -->
+                                <input type="file" id="myfile01" name="myfile01" class="form-control"
+                                    accept=".jpeg,.jpg,.gif,.png">
+                                <!-- 預覽圖片欄位 -->
+                                <div class="">
+                                    <img src="img/1920x1080.jpg" class="w-25 my-3 d-none" alt="" id="prevImg">
+                                </div>
+                                <div class="form-text text-center">小於2M的檔案!</div>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="modal_update_btn">儲存變更</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script src="js/check_member_state.js"></script>
+    <script>
+        // var u_id;//for mem_select_one_api.php
+        var id;//for update
+        var flag_upload = false; //檔案是否符合規則
+        var u_id;
+
+        $(function () {
+            top01();
+            
+            // console.log(location.href);
+            // console.log(location.href.split("="));
+            console.log(location.href.split("=")[1]);
+            u_id = location.href.split("=")[1]; //取得網址id
+
+            var jsonDATA = {};
+            jsonDATA["id"] = u_id;
+            console.log(JSON.stringify(jsonDATA));
+            //截入資料
+            $.ajax({
+                type: "POST",
+                url: "mem_select_one_mybook_api.php",
+                dataType: "json",
+                data: JSON.stringify(jsonDATA),
+                asyns: false,//先有資料，再有畫面
+                success: showdata_Read,
+                error: function () {
+                    alert("error-mem_select_one_mybook_api.php");
+                }
+            });
+            //圖片預覽
+            $('#myfile01').change(function () {
+                // console.log($(this));
+                // console.log(myfile01);
+                //取得檔案詳細資料
+                console.log(myfile01.files[0]);
+                //取得檔案型態
+                console.log(myfile01.files[0].type);
+                // console.log(Math.round(myfile01.files[0].size));//byte
+
+                //預覽圖片
+                if (myfile01.files[0].type == "image/png" || myfile01.files[0].type == "image/jpeg" || myfile01.files[0].type == "image/gif" || myfile01.files[0].type == "image/jpg") {
+                    console.log('格式符合');
+                    //圖片大小
+                    if (Math.round(myfile01.files[0].size / 1024 / 1024, 2) < 2) {
+                        //取得上傳檔案 暫存檔路徑
+                        console.log(URL.createObjectURL(myfile01.files[0]));
+                        //#prevImg 預覽圖片欄位的id
+                        $('#prevImg').removeClass("d-none");
+                        //attr 是用來替換參數值的
+                        //attr("要換的參數欄位",要換的參數值)
+                        $("#prevImg").attr("src", URL.createObjectURL(myfile01.files[0]));
+                        $("#file_size_err").removeClass("text-danger");
+                        $("#file_size_err").addClass("text-secondary");
+                        flag_upload = true;
+                    } else {
+                        alert('檔案不得超過2M');
+                        $("#file_size_err").removeClass("text-secondary");
+                        $("#file_size_err").addClass("text-danger");
+                        flag_upload = false;
+                    }
+                } else {
+                    console.log('格式不符合');
+                    //在更改檔案不符合時，取消預覽
+                    $('#prevImg').addClass("d-none");
+                    flag_upload = false;
+                }
+            });
+            
+        });
+
+        function showdata_Read(data) {
+            console.log(data);
+            console.log(data.data[0].UserState);
+            if (data.state) {
+                // alert(data.message);
+                $("#mybody").empty();
+                var data = data.data;
+                var html;
+                //是否停權
+                for (var i = 0; i < data.length; i++) {
+                    if (data[0].UserState === "y") {
+                        // console.log(data);
+                        if (data[i]['chapter_Chapter'] != undefined) {
+                            html = '<div class="row g-0 " ><div class="col-4  text-center" ><div class="img-fluid bg-cover" style="background-image: url(' + data[i]['File_img'] + '); height: 300px;"></div></div><div class="col-8" ><div class="card-body" ><h3 class="card-title ">' + data[i]['Title'] + '</h3><div class="row"><div class="col-md-7 mt-3"><p class="card-text">作者：' + data[i]['Author'] + '</p></div><div class="col-md-5 mt-3"><p class="card-text">狀態：' + data[i]['Statebl'] + '</p></div></div><p class="card-text mt-3">最新章節：第' + data[i]['chapter_Chapter'] + '章 ' + data[i]['chapter_Title'] + '</p><p class="card-text mt-3">標籤：' + data[i]['tags_bl_Tag'] + '</p><p class="card-text mt-3">更新時間：' + data[i]['chapter_Update_at'] + '</p><p class="card-text mt-3">建立時間：' + data[i]['Created_at'] + '</p><!-- <p class="card-text mt-3"><small class="text-muted"></small></p> --><div class="text-end"> <a href="article_R.html?id=' + data[i]['Mem_id'] + '=bl_id=' + data[i]['Bl_id'] + '" class="btn btn-outline-secondary me-2" data-mem_id="' + data[i]['Mem_id'] + '" data-bl_id="' + data[i]['Bl_id'] + '" id="chapter_btn">進入章節</a><a href="#" class="btn btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#updatamodal" data-bl_id="' + data[i]['Bl_id'] + '" data-title="' + data[i]['Title'] + '" data-author="' + data[i]['Author'] + '"  data-statebl="' + data[i]['Statebl'] + '" data-summary="' + data[i]['Summary'] + '" data-tags_id="' + data[i]['Tags_id'] + '" data-myfile01="' + data[i]['File_img'] + '"   id="update_btn"  data-mem_id="' + data[i]['Mem_id'] + '" >小說資訊更新</a><a href="#" class="btn btn-outline-danger" data-bl_id="' +data[i]['Bl_id']   +'" id="delete_btn">刪除</a></div></div></div></div>'
+                            $("#mybody").append(html);
+                        } else {
+                            html = '<div class="row g-0 " ><div class="col-4  text-center" ><div class="img-fluid bg-cover" style="background-image: url(' + data[i]['File_img'] + '); height: 300px;"></div></div><div class="col-8" ><div class="card-body" ><h3 class="card-title ">' + data[i]['Title'] + '</h3><div class="row"><div class="col-md-7 mt-3"><p class="card-text">作者：' + data[i]['Author'] + '</p></div><div class="col-md-5 mt-3"><p class="card-text">狀態：' + data[i]['Statebl'] + '</p></div></div><p class="card-text mt-3">最新章節：尚無資料</p><p class="card-text mt-3">標籤：' + data[i]['tags_bl_Tag'] + '</p><p class="card-text mt-3">更新時間：尚無資料</p><p class="card-text mt-3">建立時間：' + data[i]['Created_at'] + '</p><!-- <p class="card-text mt-3"><small class="text-muted"></small></p> --><div class="text-end"> <a href="article_R.html?id=' + data[i]['Mem_id'] + '=bl_id=' + data[i]['Bl_id'] + '" class="btn btn-outline-secondary me-2" data-mem_id="' + data[i]['Mem_id'] + '" data-bl_id="' + data[i]['Bl_id'] + '" id="chapter_btn">進入章節</a><a href="#" class="btn btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#updatamodal" data-bl_id="' + data[i]['Bl_id'] + '" data-title="' + data[i]['Title'] + '" data-author="' + data[i]['Author'] + '"  data-statebl="' + data[i]['Statebl'] + '" data-summary="' + data[i]['Summary'] + '" data-tags_id="' + data[i]['Tags_id'] + '" data-myfile01="' + data[i]['File_img'] + '"   id="update_btn"  data-mem_id="' + data[i]['Mem_id'] + '" >小說資訊更新</a><a href="#" class="btn btn-outline-danger" data-bl_id="' + data[i]['Bl_id'] + '" id="delete_btn">刪除</a></div></div></div></div>'
+                            $("#mybody").append(html);
+
+                        }
+
+                    } else {
+                        html = '<div class="row g-0 " ><div class="col-4  text-center" ><div class="img-fluid bg-cover" style="background-image: url(' + data[i]['File_img'] + '); height: 300px;"></div></div><div class="col-8" ><div class="card-body" ><h3 class="card-title ">' + data[i]['Title'] + '</h3><div class="row"><div class="col-md-7 mt-3"><p class="card-text">作者：' + data[i]['Author'] + '</p></div><div class="col-md-5 mt-3"><p class="card-text">狀態：' + data[i]['Statebl'] + '</p></div></div><p class="card-text mt-3">最新章節：' + data[i][''] + '</p><p class="card-text mt-3">標籤：' + data[i]['tags_bl_Tag'] + '</p><p class="card-text mt-3">更新時間：' + data[i]['Update_at'] + '</p><p class="card-text mt-3">建立時間：' + data[i]['Created_at'] + '</p><!-- <p class="card-text mt-3"><small class="text-muted"></small></p> --><div class="text-end"> <a href="article.html?bl_id=' + data[i]['Bl_id'] + '" class="btn btn-outline-secondary me-2 disabled" data-bl_id="' + data[i]['Bl_id'] + '" id="chapter_btn">進入章節</a><a href="#" class="btn btn-outline-secondary me-2 disabled" data-bs-toggle="modal" data-bs-target="#updatamodal" data-bl_id="' + data[i]['Bl_id'] + '" data-title="' + data[i]['Title'] + '" data-author="' + data[i]['Author'] + '"  data-statebl="' + data[i]['Statebl'] + '" data-summary="' + data[i]['Summary'] + '" data-tags_id="' + data[i]['Tags_id'] + '" data-myfile01="' + data[i]['File_img'] + '"   id="update_btn">小說資訊更新</a><a href="#" class="btn btn-outline-danger disabled" data-bl_id="' + data[i]['Bl_id'] + '" id="delete_btn">刪除</a></div></div></div></div>'
+                        $("#mybody").append(html);
+                    }
+
+                }
+
+            } else {
+                alert(data.message);
+            }
+
+            // 監聽更新按鈕 將藏的資料帶入modal
+            $("#mybody #update_btn").bind("click", function () {
+                console.log(data);
+                console.log($(this).data("bl_id"));
+                console.log($(this).data("ID"));
+                // console.log($(this).data("tags_id"));
+
+                $("#myfile01").val("");
+                $("#prevImg").addClass("d-none");
+                //將data-* 參數 帶入modal畫面
+                id = $(this).data("bl_id");
+                title = $(this).data("title");
+                statebl = ($(this).data("statebl"));
+                author = ($(this).data("author"));
+                summary = $(this).data("summary");
+                // tags_id = ($(this).data("tags_id"));
+                // myfile01 = ($(this).data("myfile01"));
+
+                // 下面呼叫的是modal
+
+                $("#title").val(title);
+                $("#author").val(author);
+                $("#statebl").val(statebl);
+                $("#summary").val(summary);
+                // $("#tags_id").val(tags_id);
+                // $("#myfile01").val(myfile01);
+            });
+
+            //監聽modal 更新按鈕 #modal_update_btn
+            $("#modal_update_btn").bind("click", function () {
+                // var tags_id = [];
+                // $.each($("input[name='tags_id']:checked"), function () {
+                //     tags_id.push($(this).val());
+                //     console.log(tags_id);
+                // });
+                // var tags_id = tags_id.toString()
+                var jsonDATA = {};
+                jsonDATA["ID"] = id;
+                jsonDATA["title"] = $("#title").val();
+                jsonDATA["statebl"] = $("#statebl").val();
+                jsonDATA["author"] = $("#author").val();
+                jsonDATA["summary"] = $("#summary").val();
+                // jsonDATA["tags_id"] = tags_id;
+                console.log(JSON.stringify(jsonDATA));
+
+                //傳遞至後段執行更新
+                $.ajax({
+                    type: "POST",
+                    url: "myulbook_U_api.php",
+                    data: JSON.stringify(jsonDATA),
+                    dataType: "json",
+                    success: showdata_updata,
+                    error: function () {
+                        alert("error-myulbook_C_api.php");
+                    }
+                });
+            });
+            //監聽modal 更新圖片 #modal_update_btn
+            $('#modal_update_btn').click(function () {
+                console.log(myfile01);
+                console.log(myfile01.files);
+                console.log(myfile01.files[0]);
+                if ($("#myfile01").val() == 0) {
+                    return;
+                } else {
+                    var formData = new FormData();
+                    formData.append("myfile01", myfile01.files[0]);
+                    console.log(formData);
+                    $.ajax({
+                        type: "POST",
+                        url: "img_U_api.php",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        dataType: "json",
+                        data: formData,
+                        success: showdata_updata_img,
+                        error: function () {
+                            alert("err0-img_U_api.php");
+                        }
+                    });
+                }
+
+
+
+            });
+            // 刪除按鈕監聽
+            $("#mybody #delete_btn").bind("click", function () {
+                console.log($(this).data("bl_id"));
+                if (confirm("確認刪除 id:" + $(this).data("bl_id") + "?")) {
+                    console.log("ok");
+
+                    //ajax.....
+                    id = $(this).data("bl_id");
+                    var jsonDATA = {};
+                    jsonDATA["ID"] = id;
+                    console.log(JSON.stringify(jsonDATA));
+
+                    $.ajax({
+                        type: "POST",
+                        url: "myulbook_D_api.php",
+                        data: JSON.stringify(jsonDATA),
+                        dataType: "json",
+                        async: false,
+                        success: showdata_delete,
+                        error: function () {
+                            alert("error_myulbook_D_api.php");
+                        }
+                    });
+                } else {
+                    console.log("not ok");
+                    return false;
+                }
+
+            });
+            //登出按鈕監聽
+            $("#logout_btn").bind("click", function () {
+                setCookie("UID01", "", 7);
+                setCookie("UID02", "", 7);
+                location.href = "Home.html";
+            });
+
+
+
+        }
+
+        function showdata_updata(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                window.location.replace("myubook_R.html?id=" + u_id + "")
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_updata_img(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                window.location.replace("myubook_R.html?id=" + u_id + "")
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_delete(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                location.href = "myubook_R.html?id=" + u_id + "";
+            } else {
+                alert(data.message);
+                location.reload();
+            }
+        }
+
+    
+      
+    </script>
+
+
+
+
+
+</body>
+
+</html>

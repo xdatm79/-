@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瀏覽頁面</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/myall.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/animate4.1.0.min.css">
+    <style>
+        .nav-pills .nav-item .nav-link {
+            width: 120px;
+            text-align: center;
+        }
+
+        .nav-pills .nav-item a {
+            color: var(--mycolor17);
+        }
+
+        .nav-pills .nav-item .nav-link.active {
+            background-color: var(--mycolor19);
+            color: var(--mycolor20);
+            font-weight: 700;
+        }
+
+        @media screen {
+            .img {
+                height: 200px;
+            }
+        }
+
+        @media screen and (min-width: 576px) {
+            .img {
+                height: 200px;
+            }
+        }
+
+        @media screen and (min-width: 768px) {
+            .img {
+                height: 275px;
+            }
+        }
+
+        @media screen and (min-width: 992px) {
+            .img {
+                height: 275px;
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            .img {
+                height: 285px;
+            }
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--mycolor17);
+            font-weight: 400;
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 頂端 -->
+    <section id="top">
+    </section>
+    <div class="container " id="app">
+        <div class="fs-5 fw-900 mt-3">小說分類</div>
+        <!-- 其他 visibilityOther-->
+        <div class="row mt-3 ">
+            <div class="">
+                <ul class="nav nav-pills ">
+                    <!-- <li class="nav-item " @click="visibilityOther ='全部'">
+                        <a class="nav-link " href="#" value="全部" :class="{'active':visibilityOther == '全部' }">全部</a>
+                    </li> 
+                    <li class="nav-item " @click="visibilityOther ='最新更新'">
+                        <a class="nav-link " href="#" value="最新更新"
+                            :class="{'active':visibilityOther == '最新更新' }">最新更新</a>
+                    </li>
+                    <li class="nav-item" @click="visibilityOther ='收藏排行'">
+                        <a class="nav-link  " href="#" value="收藏排行"
+                            :class="{'active':visibilityOther == '收藏排行' }">收藏排行</a>
+                    </li> -->
+                    <li class="nav-item " v-for="(item,key) in allOther" @click="visibilityOther = item"
+                        v-bind:key="key">
+                        <!-- newTags.includes(item.tags_Tags_name) -->
+                        <a class="nav-link " :href="rrr" type="checkbox" :value="item"
+                            :class="{'active': visibilityOther==(item)}" @click="rrrr(item)">
+                            {{ item}}</a>
+                    </li>
+                </ul>
+            </div>
+            <hr class="mt-3">
+        </div>
+        <!-- 連載狀態visibilityStatebl -->
+        <div class="row mt-3 ">
+            <div class="">
+                <ul class="nav nav-pills">
+                    <!-- <li class="nav-item" @click="visibilityStatebl = '全部'">
+                        <a class="nav-link" href="#" value="全部" :class="{'active': visibilityStatebl == '全部' }">全部</a>
+                    </li>
+                    <li class="nav-item" @click="visibilityStatebl = '連載中'">
+                        <a class="nav-link" href="#" value="連載中"
+                            :class="{'active': visibilityStatebl == '連載中' }">連載中</a>
+                    </li>
+                    <li class="nav-item" @click="visibilityStatebl = '已完結'">
+                        <a class="nav-link" href="#" value="已完結"
+                            :class="{'active': visibilityStatebl == '已完結' }">已完結</a>
+                    </li> -->
+                    <li class="nav-item " v-for="(item,key) in allStatebl" @click="visibilityStatebl = item"
+                        v-bind:key="key">
+                        <!-- newTags.includes(item.tags_Tags_name) -->
+                        <a class="nav-link " href="#" type="checkbox" :value="item"
+                            :class="{'active': visibilityStatebl==(item)}">
+                            {{ item }}</a>
+                    </li>
+                </ul>
+            </div>
+            <hr class="mt-3">
+        </div>
+        <!-- 標籤visibilityTags -->
+        <div class="row mt-3 ">
+            <div class="">
+                <ul class="nav nav-pills " @click="filterData">
+                    <li class="nav-item" @click="visibilityTags = '全部'">
+                        <a class="nav-link " href="#" value="全部" :class="{'active': visibilityTags == '全部'}"
+                            @click="choicetags(visibilityTags01)">全部</a>
+                    </li>
+                    <li class="nav-item " v-for="(item,key) in alltags" @click="visibilityTags = item.tags_Tags_name"
+                        v-bind:key="key">
+                        <!-- newTags.includes(item.tags_Tags_name) -->
+                        <a class="nav-link " href="#" type="checkbox" :value="item.tags_Tags_name"
+                            :class="{'active': visibilityTags==(item.tags_Tags_name)}"
+                            @click="choicetags(item.tags_Tags_name)">
+                            {{ item.tags_Tags_name }}</a>
+                    </li>
+
+                </ul>
+            </div>
+            <hr class=" mt-3">
+        </div>
+        <!-- 篩選內容 -->
+        <div class="row row-cols-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6" id="contact_contact">
+            <!-- 書 -->
+            <div class="" v-for="(item,key) in filterData" @click="blid(item.Bl_id)">
+                <a :href="rou">
+                    <div class="img-fluid bg-cover img rounded pt-2"
+                        :style="{backgroundImage: 'url('+item.File_img+')'}">
+                        <!-- 連載或完結 -->
+                        <div class=" text-white bg-danger w-30 text-center  " v-if="item.Statebl== '連載中'">
+                            連 載
+                        </div>
+                        <div class=" text-white bg-success w-30 text-center " v-if="item.Statebl== '完結'">
+                            完 結
+                        </div>
+                    </div>
+                </a>
+
+                <div class="text-center mt-1" @click="blid(item.Bl_id)">
+                    <a :href="rou">{{item.Title}} </a>
+
+                </div>
+                <div class="text-center mt-1" v-if="item.chapter_Created_at" @click="blid(item.Bl_id)">
+                    <a :href="rou">
+                        第{{ item.chapter_Chapter }}章
+                    </a>
+
+                </div>
+            </div>
+
+
+        </div>
+        <!-- <router-view></router-view> -->
+    </div>
+
+
+
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/member.js"></script>
+    <script src="js/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="js/browse_book_api.js"></script>
+    <script src="https://unpkg.com/vue-router@4"></script>
+    <script>
+
+        var App = {
+            data() {
+                return {
+                    visibilityOther: '全部', //標籤頁面用
+                    visibilityStatebl: '全部', //標籤頁面用
+                    visibilityTags: '全部', //標籤頁面用
+                    visibilityTags01: '全部', //標籤頁面用
+                    allOther: ['全部', '最新更新', '收藏排行'],
+                    allStatebl: ['全部', '連載中', '完結'],
+                    alltags: [],
+                    allbooks_BYID: [],
+                    allbooks_BYUPD: [],
+                    allbooks_BYCR: [],
+                    newTags: [],
+                    rou: '',
+                    rrr: 'http://google.com',
+
+                }
+            },
+            created() {
+                var vm = this;
+                var geturl = window.location.href;
+                var getqyinfo = geturl.split('#')[1];
+                if(getqyinfo == 'all' || getqyinfo == undefined){
+                    vm.visibilityOther = '全部';
+                }else if(getqyinfo == 'up'){
+                    vm.visibilityOther = '最新更新';
+                }else if(getqyinfo == 'col'){
+                    vm.visibilityOther = '收藏排行';
+                }                
+                console.log(getqyinfo);
+                // console.log(getOther);
+                
+                // vm.chapter_ID = getchap_id;
+                apiTagsItem()
+                    .then((res) => {
+                        console.log(res.data);
+                        // console.log(response.data.data);
+                        vm.alltags = res.data.data;
+                        // vm.getRegion();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                apiFilter_Book_BYIDItem()
+                    .then((res) => {
+                        console.log(res.data);
+                        // console.log(response.data.data);
+                        vm.allbooks_BYID = res.data.data;
+                        // vm.getRegion();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                apiFilter_Book_BYUPDItem()
+                    .then((res) => {
+                        console.log(res.data);
+                        // console.log(response.data.data);
+                        vm.allbooks_BYUPD = res.data.data;
+                        // vm.getRegion();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                apiFilter_Book_BYCRItem()
+                    .then((res) => {
+                        console.log(res.data);
+                        // console.log(response.data.data);
+                        vm.allbooks_BYCR = res.data.data;
+                        // vm.getRegion();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+
+            },
+            computed: {
+                filterData() {
+                    var vm = this;
+
+                    // 多值                    // 
+                    // if (vm.visibilityTags === '全部') {
+                    //     return vm.allbooks;
+                    // } else {
+                    //     var aaa = vm.newTags.toString();
+                    //     // console.log(aaa);
+                    //     var bbb = aaa.split(',');
+                    //     // console.log(bbb);
+                    //     var filterbooks = [];
+                    //     bbb.forEach((a, i) => {
+                    //         // console.log(a);
+                    //         vm.allbooks.forEach((item, key) => {
+                    //             var ccc = item.tags_bl_Tag;
+                    //             // console.log(ccc);
+                    //             if (ccc) {
+                    //                 // console.log(ccc);
+                    //                 if (item.tags_bl_Tag.search(bbb[i])) {
+                    //                     // console.log(item);
+                    //                 filterbooks.push(item);
+                    //                 }
+                    //             }
+                    //         })
+                    //     })
+                    //     return filterbooks;
+                    // }
+                    // 
+
+                    //單選過的
+                    var filterbooks = [];
+                    var filterbooks01 = [];
+                    var filterbooks02 = [];
+                    //頂端全部
+                    if (vm.visibilityOther == '全部') {
+                        if (vm.visibilityOther == '全部' && vm.visibilityStatebl == '全部' && vm.visibilityTags == '全部') {
+                            return vm.allbooks_BYID;
+                        }
+                        vm.allbooks_BYID.forEach((item, key) => {
+                            if (vm.visibilityOther == '全部' && vm.visibilityTags == '全部' && item.Statebl == vm.visibilityStatebl) {
+                                filterbooks.push(item);
+                            }
+                            if (vm.visibilityOther == '全部' && item.tags_bl_Tag == vm.visibilityTags && '全部' == vm.visibilityStatebl) {
+                                filterbooks.push(item);
+                            }
+                            if (vm.visibilityOther == '全部' && item.tags_bl_Tag == vm.visibilityTags && item.Statebl == vm.visibilityStatebl) {
+                                // if (item.Statebl == vm.visibilityStatebl) {
+                                filterbooks.push(item);
+                                // }
+                            }
+                        })
+                        return filterbooks;
+                    }
+
+                    //頂端最新
+                    if (vm.visibilityOther == '最新更新') {
+                        vm.allbooks_BYUPD.forEach((item, key) => {
+                            if (vm.visibilityOther == '最新更新' && vm.visibilityStatebl == '全部' && vm.visibilityTags == '全部') {
+                                filterbooks01.push(item);
+                            }
+                            if (vm.visibilityOther == '最新更新' && vm.visibilityTags == '全部' && item.Statebl == vm.visibilityStatebl) {
+                                filterbooks01.push(item);
+                            }
+                            if (vm.visibilityOther == '最新更新' && item.tags_bl_Tag == vm.visibilityTags && '全部' == vm.visibilityStatebl) {
+                                filterbooks01.push(item);
+                            }
+                            if (vm.visibilityOther == '最新更新' && item.tags_bl_Tag == vm.visibilityTags && item.Statebl == vm.visibilityStatebl) {
+                                // if (item.Statebl == vm.visibilityStatebl) {
+                                filterbooks01.push(item);
+                                // }
+                            }
+                        })
+                        return filterbooks01;
+                    }
+
+                    //頂端收藏
+                    if (vm.visibilityOther == '收藏排行') {
+                        vm.allbooks_BYCR.forEach((item, key) => {
+                            if (vm.visibilityOther == '收藏排行' && vm.visibilityStatebl == '全部' && vm.visibilityTags == '全部') {
+                                filterbooks01.push(item);
+                            }
+                            if (vm.visibilityOther == '收藏排行' && vm.visibilityTags == '全部' && item.Statebl == vm.visibilityStatebl) {
+                                filterbooks01.push(item);
+                            }
+                            if (vm.visibilityOther == '收藏排行' && item.tags_bl_Tag == vm.visibilityTags && '全部' == vm.visibilityStatebl) {
+                                filterbooks01.push(item);
+                            }
+                            if (vm.visibilityOther == '收藏排行' && item.tags_bl_Tag == vm.visibilityTags && item.Statebl == vm.visibilityStatebl) {
+                                // if (item.Statebl == vm.visibilityStatebl) {
+                                filterbooks01.push(item);
+                                // }
+                            }
+                        })
+                        return filterbooks01;
+                    }
+
+
+                },
+
+            },
+            methods: {
+                choicetags(tag) {
+                    var vm = this;
+                    // console.log(tag);
+                    if (tag == vm.visibilityTags01) {
+                        vm.newTags = [];
+                        // vm.newTags.length = 0
+                    } else {
+                        if (!vm.newTags.includes(tag)) {
+                            vm.newTags.push(tag);
+
+                        } else {
+                            console.log(vm.newTags.indexOf(tag));
+                            newIndex = vm.newTags.indexOf(tag);
+                            vm.newTags.splice(newIndex, 1) // splice(第幾筆起,刪除筆數) 刪除第?筆起的?筆筆數
+                        }
+                    }
+                },
+                blid(item) {
+                    console.log(item);
+                    this.rou = 'read.html?Bl_id=' + item;
+                },
+                rrrr(item) {
+                    console.log(item);
+                    this.rrr = '#' + item;
+                }
+            },
+        }
+
+
+        // const Home = { template: '<div>Home</div>' }
+        // const About = { template: '<div>About</div>' }
+        // const User = { template: '<div>User</div>', }
+        // var router = VueRouter.createRouter({
+        //     history: VueRouter.createWebHashHistory(),
+        //     routes: [
+        //         { path: '/user/:id', component: User },
+        //         { path: '/', component: Home },
+        //         { path: '/about', component: About },
+        //     ]
+        // })
+        Vue.createApp(App).mount('#app');
+        // Vue.createApp(App).use(router).mount('#app');
+
+
+        new WOW().init();
+        $(function () {
+            top01();
+        });
+
+
+    </script>
+</body>
+
+</html>

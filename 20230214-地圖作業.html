@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地圖練習-使用觀光局資料</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/myall.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <!-- 地圖資料 -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <!-- 彙總圖標數 -->
+    <link rel="stylesheet" href="css/MarkerCluster.css">
+
+    <style>
+        #listData {
+            height: 80vh;
+            overflow: auto;
+        }
+
+        /* 設定小區塊-四方型 */
+        .marker-cluster-small {
+            background-color: rgba(181, 226, 140, 0.6)
+        }
+
+        /* 設定小區塊-圓型 */
+        .marker-cluster-small div {
+            background-color: rgba(110, 204, 57, 0.6)
+        }
+
+        /* 設定中區塊-四方型 */
+        .marker-cluster-medium {
+            background-color: rgba(241, 211, 87, 0.6)
+        }
+
+        /* 設定中區塊-圓型 */
+        .marker-cluster-medium div {
+            background-color: rgba(241, 194, 12, 0.6)
+        }
+
+        .marker-cluster div {
+            width: 30px;
+            height: 30px;
+            margin-top: 5px;
+            margin-left: 5px;
+            text-align: center;
+            border-radius: 50%;
+            font: 12px;
+        }
+
+        .marker-cluster span {
+            line-height: 30px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- 頂端 -->
+    <section id="top">
+    </section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 bg-warning vh-100 p-3">
+                <!-- 縣市 -->
+                <select class="form-select form-select-lg mb-3 my-3" aria-label=".form-select-lg  example"
+                    id="myCityName">
+                    <option disabled selected>----選擇縣市----</option>
+                    <option value="台北市">台北市</option>
+                    <option value="台中市">台中市</option>
+                </select>
+                <!-- 鄉鎮 -->
+                <select class="form-select form-select-lg mb-3 my-3" aria-label=".form-select-lg  example" id="myArea">
+                    <option disabled selected>---鄉鎮區---</option>
+                    <option value="西屯區">西屯區</option>
+                    <option value="北屯區">北屯區</option>
+                </select>
+                <!-- 資訊 -->
+                <ul class="list-group" id="listData">
+                    <li class="list-group-item">
+                        <div class="fs-3 fw-900 ">XX店名</div>
+                        <div class="fs-5">
+                            <i class="fa-solid fa-map-location-dot text-primary me-2"></i>
+                            地址：
+                        </div>
+                        <div class="fs-5">
+                            <i class="fa-solid fa-phone text-danger me-2"></i>
+                            電話：
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- 地圖 -->
+            <div class="col-md-9 bg-info">
+                <span class=" text-dark fw-700 fs-3 me-2" id="login_member"></span>
+                <button class="btn btn-danger me-2" type="button" id="logout_btn" style="display: none;">登出</button>
+                <div class="col vh-100 " id="map">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script src="js/check_member_state_1.js"></script>
+    <!-- 縣市資料 -->
+    <script src="js/CityCountyData.js"></script>
+    <script src="js/check_member_state_1.js"></script>
+    <!-- 地圖資料 -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <!-- 圖標顏色 -->
+    <script src="js/leaflet-color-markers.js"></script>
+    <!-- 彙總圖標數 -->
+    <script src="js/leaflet.markercluster.js"></script>
+
+    <script>
+        // var selectCity; //儲存所選取的縣市名稱
+        // var selectAreaList = []; //儲存所選取縣市的鄉鎮區資料
+        // var selectArea; //儲存所選取的鄉鎮區名稱
+        $(function () {
+            top01();
+            //取得本身經緯度
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+
+            //畫地圖tcnr
+            //form leafletjs.com 然後要載入此網站的css和js
+            map = L.map('map').setView([24.1705382, 120.6079343], 13);
+
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            //畫地圖tcnr 最一開始定位在中彰投的渲染
+            var strHTML01 = '<div class="card"><div class="card-header fs-5 fw-900">哈囉</div><div class="card-body"><span class="fs-5 fw-500 text-danger">現在位置</span></div>';
+            L.marker([24.1705382, 120.6079343], { icon: greenIcon }).addTo(map).bindPopup(strHTML01);
+
+            //****************使用markerClusterGroup*******************************
+            //*************************************************************
+            //************************************************************
+            //統合並計算圖標數量-1
+            //先宣告一個markers，然後在下面渲染的時候，把渲染筆數丟進來
+
+            var markers = new L.markerClusterGroup().addTo(map);
+
+
+            //取得觀光局資料
+            $.ajax({
+                type: "GET",
+                url: "js/restaurant_C_f.js",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    Data = data.XML_Head.Infos.Info;
+                },
+                error: function () {
+                    alert("error-url.json");
+                }
+            });
+            console.log(Data);
+            // 縣市資料載入後印出
+            console.log(city);
+            //頁面初始值，資訊歸零
+            $("#myCityName").empty();
+            $("#myCityName").append('<option disabled selected>----縣市----</option>');
+            $("#myArea").empty();
+            $("#myArea").append('<option disabled selected>---鄉鎮區---</option>');
+            $("#listData").empty();
+
+
+            //渲染縣市選單--從縣市資料
+            city.forEach(function (item) {
+                // console.log(item.CityName)
+                var strHTML = '<option value="' + item.CityName + '">' + item.CityName + '</option>';
+                $("#myCityName").append(strHTML);
+            });
+
+            //監聽 #myCityName 取得所選取的縣市名稱
+            $("#myCityName").change(function () {
+                console.log($(this).val());
+                selectCity = $(this).val();
+                //縣市一有更動，下方資訊就歸零
+                $("#listData").empty();
+
+                //取得該縣市的  鄉鎮區資料(AreaList)
+                city.find(function (item) {
+                    if (item.CityName == selectCity) {
+                        selectAreaList = item.AreaList;
+                    }
+                });
+                // console.log(selectAreaList);
+                // 渲染鄉鎮區選單
+                $("#myArea").empty();
+                $("#myArea").append('<option disabled selected>---鄉鎮區---</option>');
+                selectAreaList.forEach(function (item) {
+                    var strHTML = '<option value="' + item.AreaName + '">' + item.ZipCode + ' ' + item.AreaName + '</option>';
+                    $("#myArea").append(strHTML);
+                });
+            });
+
+            //監聽 #myArea 取得所選取的鄉鎮名稱
+            $("#myArea").change(function () {
+                console.log($(this).val());
+                selectArea = $(this).val();
+                console.log(selectCity + selectArea);
+
+                //篩選已決定的縣市鄉鎮區 的 藥局
+                var listData = [];//收集篩選過後的藥局資料
+                Data.forEach(function (item) {
+                    if (item.Region == selectCity && item.Town == selectArea) {
+                        // console.log(item);
+                        // 陣列的堆疊用push
+                        listData.push(item);
+                    }
+                });
+                console.log(listData);
+                //渲染藥局 list-group
+                $("#listData").empty();
+                removeMarker();
+                listData.forEach(function (item, key) {//(item,key)=>key是第幾筆資料
+                    var strHTML = '<li class="list-group-item" data-name="' + item.Name + '" data-add="' + item.Add + '" data-tel="' + item.Tel + '" data-lat="' + item.Py + '" data-lng="' + item.Px + '""><div class="fs-3 fw-900"> ' + item.Name + ' </div><div class="fs-5"><i class="fa-solid fa-map-location-dot text-primary me-2"></i>地址： ' + item.Add + ' </div><div class="fs-5"><i class="fa-solid fa-phone text-danger me-2"></i>電話：' + item.Tel + '</div></li > ';
+                    $("#listData").append(strHTML);
+
+                    //經緯度
+                    console.log(item.Py);
+                    console.log(item.Px);
+                    var lat = item.Py;//經度
+                    var lng = item.Px;//緯度
+
+                    var strHTML = '<div class="card"><div class="card-header fs-5 fw-900"> ' + item.Name + ' </div><div class="card-body"><div class="fs-5"><i class="fa-solid fa-map-location-dot text-primary me-2"></i>地址： ' + item.Add + ' </div><div class="fs-5"><i class="fa-solid fa-phone text-danger me-2"></i>電話：' + item.Tel + '</div>';
+                    // L.marker([lat, lng], { icon: greenIcon }).addTo(map).bindPopup(strHTML);
+
+                    //統合並計算圖標數量-2
+                    //上面有宣告一個markers，然後在這裡渲染的時候，同時把渲染筆數丟進去
+                    markers.addLayer(L.marker([lat, lng], { icon: greenIcon }).bindPopup(strHTML));
+                    //將地圖移動到第一筆資料
+                    if (key == 0) {
+                        map.panTo([lat, lng]);
+                    }
+                });
+                //先有畫面才能監聽，所以寫在這裡
+                //hover 監聽list-group-item 觸發 marker Popup 事件
+                $("#listData .list-group-item").hover(function () {
+                    //印出 隱藏的7個參數
+                    console.log($(this).data("name"));
+                    console.log($(this).data("add"));
+                    console.log($(this).data("tel"));
+                    console.log($(this).data("lat"));
+                    console.log($(this).data("lng"));
+                    markerPopup($(this).data("name"), $(this).data("add"), $(this).data("tel"), $(this).data("lat"), $(this).data("lng"));
+                });
+            });
+
+        });
+
+        //清除 "所有" marker的圖層;Layer圖層
+        function removeMarker() {
+            map.eachLayer(function (layer) {
+                if (layer instanceof L.Marker) {//instanceof 是用來判斷A是否有B
+                    map.removeLayer(layer)
+                }
+            });
+        }
+
+        //找出所有圖標並渲染
+        function markerPopup(name, add, tel, lat, lng) {
+            console.log(name, add, tel, lat, lng);
+            var strHTML = '<div class="card"><div class="card-header fs-5 fw-900"> ' + name + ' </div><div class="card-body"><div class="fs-5"><i class="fa-solid fa-map-location-dot text-primary me-2"></i>地址： ' + add + ' </div><div class="fs-5"><i class="fa-solid fa-phone text-danger me-2"></i>電話：' + tel + '</div>';
+            L.marker([lat, lng], { icon: greenIcon }).addTo(map).bindPopup(strHTML).openPopup();
+        }
+
+
+        //取得本身經緯度
+        function showPosition(position) {
+            console.log(position);
+            console.log(position.coords.latitude);
+            console.log(position.coords.longitude);
+        }
+    </script>
+</body>
+
+</html>

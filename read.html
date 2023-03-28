@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>read</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/myall.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <style>
+        /* 取消輸入的框框 */
+        .search:focus,
+        .search:active {
+            outline: none;
+            /* color: black; */
+        }
+
+        .bgc_btn:active,
+        .bgc_btn:focus {
+            appearance: none;
+            outline: none;
+            border-color: #d4d3d3;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, .2);
+            color: #d4d3d3;
+        }
+
+        /* 垂直至中 */
+        .table th,
+        .table td,
+        .middle {
+            vertical-align: middle !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            .table-rwd thead {
+                display: none;
+            }
+
+            .table-rwd tbody tr {
+                display: block;
+                border: 2px solid #aaa;
+                margin-top: 15px;
+            }
+
+            .table-rwd tbody tr td {
+                display: block;
+                overflow: hidden;
+            }
+
+            .table-rwd tbody tr td.aaa {
+                display: none;
+                overflow: hidden;
+            }
+
+            .table-rwd tbody tr td:before {
+                content: attr(data-th) ' ';
+                color: blueviolet;
+                font-weight: 700;
+                width: 17%;
+                float: left;
+                /* 下面是分散對齊用的 最後一航的對其方式 justify是分散對齊*/
+                text-align-last: justify;
+            }
+
+            a {
+                text-decoration: none;
+                color: var(--mycolor17);
+                font-weight: 400;
+
+            }
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 頂端導覽 -->.
+    <section id="top">
+    </section>
+    <div class="container mb-5 " id="app">
+        <!-- 小說資訊 -->
+        <div class="card mb-3 mt-5" id="mybook_infoma">
+            <div class="row g-0 ">
+                <!-- 圖片 -->
+                <div class="col-4 col-md-4  text-center ">
+                    <div class="img-fluid bg-cover"
+                        :style=" {backgroundImage: 'url('+ read01.File_img +')',height:'300px'}">
+                    </div>
+                </div>
+                <div class="col-8 col-md-8">
+                    <div class="card-body">
+                        <!-- 資訊 -->
+                        <div>
+                            <div class="card-title fw-900 fs-1"> {{ read01.Title }}</div>
+                            <div class="row">
+                                <div class="col-md-7 mt-3">
+                                    <p class="card-text">作者：{{ read01.Author }}</p>
+                                </div>
+                                <div class="col-md-5 mt-3">
+                                    <p class="card-text">狀態：{{ read01.Statebl }}</p>
+                                </div>
+                            </div>
+                            <p class="card-text mt-3">簡介：{{ read01.Summary }}</p>
+                            <p class="card-text mt-3">最新章節：第{{ read01.chapter_Chapter }}章 {{ read01.chapter_Title }}</p>
+                            <p class="card-text mt-3">最後更新：{{ read01.chapter_Created_at }}</p>
+                            <p class="card-text mt-3 ">標籤：{{ read01.tags_bl_Tag }}</p>
+                            <a href=""><i class="fa-solid fa-heart fa-2x text-secondary " v-if="!heart"
+                                    @click.prevent="collect"></i></a>
+                            <a href=""><i class="fa-solid fa-heart fa-2x text-danger " v-if="heart"
+                                    @click.prevent="collect"></i></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 章節列表 -->
+        <div class="row mt-3 ">
+            <div class="col-12 ">
+                <table class="table table-bordered table-striped table-hover table-rwd ">
+                    <thead class="table-dark  ">
+                        <tr>
+                            <th class="text-center w-5 ">章節</th>
+                            <th class="text-center w-50">標題</th>
+                            <th class="text-center w-10 ">修改日期</th>
+                            <th class="text-center w-10">建檔日期</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mychapter_infoma" class="" v-for="(item,key) in read">
+                        <tr class="">
+                            <td data-th="章&nbsp&nbsp&nbsp&nbsp&nbsp節&nbsp" class="text-md-center "
+                                @click="blid(item.chapter_ID)"><a :href="rou">
+                                    {{ item.chapter_Chapter }}
+                                </a></td>
+                            <td data-th="標&nbsp&nbsp&nbsp&nbsp&nbsp題&nbsp" class=""@click="blid(item.chapter_ID)"><a :href="rou">
+                                    {{ item.chapter_Title }}
+                                </a></td>
+                            <td class="text-md-center aaa"> {{ item.chapter_Update_at }} </td>
+                            <td class="text-md-center aaa"> {{ item.chapter_Created_at }} </td>
+                        </tr>
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script src="js/member.js"></script>
+    <script src="js/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+    <script>
+        var member;
+
+
+        $(function () {
+            top01();
+        })
+        var App = {
+            data() {
+                return {
+                    read: [],
+                    read01: [],
+                    heart: false,
+                    memberstate: false,
+                    membervul: [],
+                    collstate: '',
+                    chapter_ID: '',
+                    rou: '',
+                    bl_id: '',
+
+
+                }
+            },
+            created() {
+                var vm = this;
+                var url = 'read.php';
+                var geturl = window.location.href;
+                var getqyinfo = geturl.split('?')[1];
+                var getbl_id = geturl.split('=')[1];
+                // console.log(getbl_id);
+                axios.post(url, JSON.stringify({
+                    chap_id: getbl_id,
+                })
+                )
+                    .then((res) => {
+                        console.log(res.data);
+                        // console.log(response.data.data);
+                        vm.read = res.data.data;
+                        var aaa = vm.read.length;
+                        vm.read01 = res.data.data[aaa - 1];
+                        vm.bl_id=getbl_id;
+                        // vm.getRegion();
+                        // console.log(vm.read.length);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                // var url01 = 'mem_collect_statu_api.php';
+                // axios.post(url01, JSON.stringify({
+                //     Mem_id: vm.membervul,
+                //     Bl_id: vm.read01.chapter_Bl_id,
+                // })).then((res) => {
+                //     console.log(res.data.state);
+                //     if (!res.data.state) {
+                //         vm.heart = false;
+                //     } else {
+                //         vm.heart = true;
+                //     }
+                // })
+                //     .catch((error) => {
+                //         console.log(error);
+                //     })
+            },
+            methods: {
+                // http://localhost:81/192.168.10.104/web2022/%e5%b0%88%e9%a1%8c/read.html?Bl_id=1
+                collect() {
+                    var vm = this;
+                    var url = 'mem_collect_api.php';
+                    vm.memberstate = member;
+                    // == undefined
+                    if (member.length !== 0) {
+                        vm.membervul = member.data[0].ID;
+                        if (vm.heart) {
+                            vm.heart = false;
+                            vm.collstate = '取消';
+                        } else {
+                            vm.heart = true;
+                            vm.collstate = '成功';
+
+                        }
+                        axios.post(url, JSON.stringify({
+                            Mem_id: vm.membervul,
+                            Bl_id: vm.read01.chapter_Bl_id,
+                        }))
+                            .then((res) => {
+                                console.log(res.data);
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            })
+                    } else {
+                        alert('請先登入會員');
+                    }
+                },
+                blid(item) {
+                    var vm = this;
+                    console.log(item);
+                    vm.chapter_ID = item;
+                    vm.rou = 'read_art.html?Bl_id=' +  vm.bl_id + '=chap_id=' + vm.chapter_ID;
+                },
+            },
+        }
+        Vue.createApp(App).mount('#app');
+
+
+    </script>
+
+</body>
+
+</html>

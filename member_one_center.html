@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員個別中心</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/myall.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <!-- 下面2個為tab需要 -->
+    <!-- <link rel="stylesheet" href="css/jquery-ui.min.css">
+    <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css"> -->
+    <style>
+        @media screen {
+            .img {
+                height: 200px;
+            }
+        }
+
+        @media screen and (min-width: 576px) {
+            .img {
+                height: 200px;
+            }
+        }
+
+        @media screen and (min-width: 768px) {
+            .img {
+                height: 275px;
+            }
+        }
+
+        @media screen and (min-width: 992px) {
+            .img {
+                height: 275px;
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            .img {
+                height: 285px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 頂端 -->
+    <section id="top">
+    </section>
+    <!-- 第一行 -->
+    <div class="demo ms-0 me-0 mt-0" style="border: 0px;">
+        <div class="container mt-5 mb-5">
+            <div class="ms-2 fs-2 fw-900" id="mem123456"></div>
+        </div>
+    </div>
+
+    <div class="container mt-0">
+        <!-- 導覽列 -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+                    role="tab" aria-controls="home" aria-selected="true">修改密碼</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="false">修改信箱</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"
+                    role="tab" aria-controls="contact" aria-selected="false" aria-current="page">我的收藏</button>
+            </li>
+            <li class=" nav-item" role="presentation">
+                <!-- <button class="nav-link " data-bs-toggle="tab" aria-selected="false" type="button" role="tab"><a
+                        href="####" class="text-decoration-none">作家專區</a></button> -->
+
+                <button class="nav-link " data-bs-toggle="tab" aria-selected="false" type="button" role="tab"><a
+                        href="myubook_R" class="text-decoration-none " id="myubook_R">作家專區</a></button>
+
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <!-- 密碼內容 -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <!-- 修改密碼內容 -->
+                <div class="row mt-5 ms-5">
+                    <div class="col-2 d-flex align-items-center">
+                        <label for="org_password" class="form-label">原密碼</label>
+                    </div>
+                    <div class="col-3">
+                        <input type="password" id="org_password" name="org_password" class="form-control"
+                            placeholder="密碼1-8字!" required>
+                        <div class="invalid-feedback" id="org_invalid-feedback">密碼長度錯誤!</div>
+                    </div>
+                </div>
+                <div class="row mt-3 ms-5">
+                    <div class="col-2 d-flex align-items-center">
+                        <label for="chg_password" class="form-label">新密碼</label>
+                    </div>
+                    <div class="col-3">
+                        <input type="password" id="chg_password" name="chg_password" class="form-control"
+                            placeholder="密碼1-8字!" required>
+                        <div class="form-text" id="err_chg_password"></div>
+                        <div class="valid-feedback" id="reg_valid-feedback">密碼長度正確!</div>
+                        <div class="invalid-feedback" id="reg_invalid-feedback">密碼長度錯誤!</div>
+                    </div>
+                </div>
+                <div class="row ms-5 mt-3 ">
+                    <div class="col-2 d-flex align-items-center">
+                        <label for="chg_re_password" class="form-label">確認新密碼</label>
+                    </div>
+                    <div class="col-3">
+                        <input type="password" id="chg_re_password" name="chg_re_password" class="form-control">
+                        <div class="form-text" id="err_chg_re_password"></div>
+                    </div>
+                </div>
+                <div class="row ms-5 mt-3 text-end">
+                    <div class="col-4">
+                        <button type="button" class="btn btn-primary " id="chg_pwd_btn">確認修改</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 信箱內容 -->
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <!-- 修改信箱內容 -->
+                <div class="row mt-5 ms-5">
+                    <div class="col-2 d-flex align-items-center">
+                        <label for="chg_email" class="form-label">新信箱</label>
+                    </div>
+                    <div class="col-3">
+                        <input type="email" id="chg_email" name="chg_email" class="form-control" placeholder="請輸入信箱地址"
+                            required>
+                    </div>
+                </div>
+                <div class="row mt-3 ms-5">
+                    <div class="col-2 d-flex align-items-center">
+                        <label for="chg_email_password" class="form-label">密碼</label>
+                    </div>
+                    <div class="col-3">
+                        <input type="password" id="chg_email_password" name="chg_email_password" class="form-control"
+                            placeholder="請輸入密碼!" required>
+                    </div>
+                </div>
+                <div class="row ms-5 mt-3 text-end">
+                    <div class="col-4">
+                        <button type="button" class="btn btn-primary " id="chg_email_btn">確認修改</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 收藏內容 -->
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <!-- 我的收藏內容 -->
+                <!-- 編輯收藏 -->
+                <div class=" mt-3 mb-0 ">
+                    <form class=" d-flex justify-content-end">
+                        <div class="d-flex d-none" id="collect_close">
+                            <div class="me-2 mt-1" id="collect_del_btn">
+                                <a href="#" class="text-secondary text-decoration-none ">
+                                    刪除
+                                </a>
+                            </div>
+                            <!-- 關閉icon X-->
+                            <div class="me-2" id="collect_close_1">
+                                <a href="#" id="collect_close_01"><i class=" fa-solid fa-xmark fa-2x
+                                    text-secondary"></i></a>
+                            </div>
+                        </div>
+                        <!-- 編輯icon 三 -->
+                        <div class="" id="collect_edit">
+                            <a href="##" id="collect_edith"><i
+                                    class="fa-solid fa-pen-to-square fa-2x text-secondary "></i></a>
+                        </div>
+                    </form>
+                </div>
+                <!-- 收藏 -->
+                <div class="row row-cols-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6" id="contact_contact">
+                    <!-- 沒超過3天 -->
+                    <label class="col mt-3" for="###">
+                        <!-- 書 -->
+                        <a href="read.html?Bl_id=XXX">
+                             <div class="img-fluid bg-cover img" style="background-image: url(img/1314.png);">
+                            <div class="" id="">
+                                <!-- 刪除的框框check -->
+                                <div class="row img">
+                                    <div class="col d-none" id="check_check">
+                                        <input class="form-check-input ms-1 fs-3 check_check" type="checkbox" value=""
+                                            id="###">
+                                    </div>
+                                    <img src="img/new.png" alt="" style="width: 36%;height: 25%;">
+                                    <!-- 刪除的框框垃圾桶icon -->
+                                    <div class="d-flex justify-content-end align-items-end mb-2">
+                                        <a href="" id="collect_del_icon" data-id="XXX"><i
+                                                class="fa-solid fa-trash-can text-white fa-2x  me-1"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-1">XXX/XXX</div>
+                        </a>
+                       
+                    </label>
+                    <!-- 超過3天 -->
+                    <label class="col mt-3" fro="' + item.Collect_id + '">
+                        <div class="img-fluid bg-cover img" style="background-image: url(' + item.File_img + ');">
+                            <div class="">
+                                <div class="row img ">
+                                    <div class="col " style="visibility:hidden" id="check_check' + item.Collect_id + '">
+                                        <input class="form-check-input ms-1 fs-3 check_check' + item.Collect_id + '"
+                                            type="checkbox" value="' + item.Collect_id + '" id="' + item.Collect_id + '"
+                                            name="book_del_cho">
+                                    </div>
+                                    <img src="img/new.png" alt="" style="width: 36%;height: 25%;">
+                                    <div class="d-flex justify-content-end align-items-end mb-2">
+                                        <a href="#" id="collect_del_icon" data-id="' + item.Collect_id + '"><i
+                                                class="fa-solid fa-trash-can text-white fa-2x  me-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-1">' + item.Title + '</div>
+                        <div class="text-center mt-1">' + item.Bl_id + '/' + item.chapter_Chapter + '</div>
+                    </label>';
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script src="js/often.js"></script>
+    <script src="js/check_member_state.js"></script>
+    <!-- tab需要 -->
+    <!-- <script src="js/jquery-ui.js"></script> -->
+
+    <script>
+        var flag_org_password = false;//原密碼
+        var flag_password = false;//新密碼
+        var flag_repassword = false;//新密碼確認
+        var u_id = location.href.split("=")[1];//用戶ID
+
+        var Collect_id;
+        $(function () {
+            top01();
+            check_member_state();
+            var jsonDATA = {};
+            jsonDATA["id"] = u_id;
+            console.log(JSON.stringify(jsonDATA));
+            // 截入資料
+            $.ajax({
+                type: "POST",
+                url: "mem_select_one_collect_api.php",
+                dataType: "json",
+                data: JSON.stringify(jsonDATA),
+                asyns: false,//先有資料，再有畫面
+                success: showdata_Read,
+                error: function () {
+                    alert("error-mem_select_one_collect_api.php");
+                }
+            });
+            //原密碼即時監聽
+            $("#org_password").bind("input propertychange", function () {
+                if ($(this).val().length > 0 && $(this).val().length < 9) {
+                    //符合規則
+                    $("#org_password").removeClass("is-invalid");
+                    // $("#org_password").addClass("is-valid");
+                    flag_org_password = true;
+                } else {
+                    //不符合規則
+                    // $("#org_password").removeClass("is-valid");
+                    $("#org_password").addClass("is-invalid");
+                    flag_org_password = false;
+                }
+            });
+            //新密碼即時監聽
+            $("#chg_password").bind("input propertychange", function () {
+                if ($(this).val() != $("#org_password").val()) {
+                    $("#chg_password").removeClass("is-invalid");
+                    $("#chg_password").addClass("is-valid");
+                    if ($(this).val().length > 0 && $(this).val().length < 9) {
+                        //符合規則密碼長度正確且密碼與原密碼不相同
+                        $("#chg_password").removeClass("is-invalid");
+                        $("#chg_password").addClass("is-valid");
+                        flag_password = true;
+                    } else {
+                        // 不符合規則密碼長度錯誤           
+                        $("#reg_invalid-feedback").text("密碼長度錯誤")
+                        $("#chg_password").removeClass("is-valid");
+                        $("#chg_password").addClass("is-invalid");
+                        // $("#chg_password").text("XXX");
+                        flag_password = false;
+                    }
+                } else {
+                    //新密碼與原密碼一致 
+                    $("#reg_invalid-feedback").text("密碼不可與原密碼一致")
+                    $("#chg_password").removeClass("is-valid");
+                    $("#chg_password").addClass("is-invalid");
+                    flag_password = false;
+                }
+            });
+            //確認新密碼即時監聽
+            $("#chg_re_password").bind("input propertychange", function () {
+                if (flag_password == true) {
+                    if ($(this).val() == $("#chg_password").val()) {
+                        //密碼確認一致
+                        $("#err_chg_re_password").html("確認密碼一致!");
+                        $("#err_chg_re_password").css("color", "green");
+                        flag_repassword = true;
+                    } else {
+                        $("#err_chg_re_password").html("密碼不一致!");
+                        $("#err_chg_re_password").css("color", "red");
+                        flag_repassword = false;
+                    }
+                } else {
+                    $("#err_chg_re_password").html("請重新確認密碼!");
+                    $("#err_chg_re_password").css("color", "red");
+                }
+            });
+            //密碼確認修改
+            $("#chg_pwd_btn").bind("click", function () {
+                if (flag_org_password && flag_password && flag_repassword) {
+                    console.log(location.href.split("=")[1]);
+                    u_id = location.href.split("=")[1];//用戶ID
+                    var jsonDATA = {};
+                    jsonDATA["ID"] = u_id;
+                    jsonDATA["password"] = $("#org_password").val();
+                    jsonDATA["new_possword"] = $("#chg_password").val();
+                    console.log(JSON.stringify(jsonDATA));
+                    // 傳遞至後段執行更新
+                    $.ajax({
+                        type: "POST",
+                        url: "member_U_password_api.php",
+                        data: JSON.stringify(jsonDATA),
+                        dataType: "json",
+                        success: showdata_updata_password,
+                        error: function () {
+                            alert("error-member_U_ password_api.php");
+                        }
+                    });
+                } else {
+                    alert("檢查後再送出!");
+                }
+            })
+            //信箱確認修改
+            $("#chg_email_btn").bind("click", function () {
+                if (chg_email != "") {
+                    // console.log(location.href.split("=")[1]);
+                    // u_id = location.href.split("=")[1];//用戶ID
+                    var jsonDATA = {};
+                    jsonDATA["ID"] = u_id;
+                    jsonDATA["password"] = $("#chg_email_password").val();
+                    jsonDATA["email"] = $("#chg_email").val();
+                    console.log(JSON.stringify(jsonDATA));
+                    // 傳遞至後段執行更新
+                    $.ajax({
+                        type: "POST",
+                        url: "member_U_email_api.php.php",
+                        data: JSON.stringify(jsonDATA),
+                        dataType: "json",
+                        success: showdata_updata_email,
+                        error: function () {
+                            alert("error-member_U_email_api.php");
+                        }
+                    });
+                }
+            })
+            //new標籤
+
+
+        });
+        function showdata_Read(data) {
+            console.log(data);
+            console.log(data.data[0].UserState);
+            if (data.data[0].UserState == "y") {
+                $("#contact_contact").empty();
+                data.data.forEach(item => {
+                    //new標籤
+                    // var today = new Date();
+                    // var today_a = today.getTime();
+                    // var someday = new Date(item.chapter_Update_at);
+                    // var today_s = someday.getTime();
+                    var day1 = new Date();
+                    var day2 = new Date(item.chapter_Update_at);
+                    var difference = Math.abs(day2 - day1);
+                    days = difference / (1000 * 3600 * 24)
+                    // console.log(days);
+                    if (days < 3) {
+                        html = '<label class="col mt-3" fro="' + item.Collect_id + '"> <a href="read.html?Bl_id=' + item.Bl_id + '"><div class="img-fluid bg-cover img" style="background-image: url(' + item.File_img + ');"><div class=""><div class="row img"><div class="col " style="visibility:hidden" id="check_check' + item.Collect_id + '"> <input class="form-check-input ms-1 fs-3 check_check' + item.Collect_id + '" type="checkbox" value="' + item.Collect_id + '" id="' + item.Collect_id + '" name="book_del_cho"></div><img src="img/new.png" alt="" style="width: 36%;height: 25%;"><div class="d-flex justify-content-end align-items-end mb-2"><a href="#" id="collect_del_icon' + item.Collect_id + '" class="d-none collect_del_icon" data-id="' + item.Collect_id + '"><i class="fa-solid fa-trash-can text-white fa-2x  me-1" ></i></a></div></div></div></div> <div class="text-center mt-1">' + item.Title + '</div><div class="text-center mt-1">' + item.Bl_id + '/' + item.chapter_Chapter + '</div></a></label>';
+                        $("#contact_contact").append(html);
+                    } else {
+                        html = '<label class="col mt-3" fro="' + item.Collect_id + '"><a href="read.html?Bl_id=' + item.Bl_id + '"><div class="img-fluid bg-cover img" style="background-image: url(' + item.File_img + ');"><div class=""><div class="row img"><div class="col d-none" id="check_check' + item.Collect_id + '"> <input class="form-check-input ms-1 fs-3 check_check' + item.Collect_id + '" type="checkbox" value="' + item.Collect_id + '" id="' + item.Collect_id + '" name="book_del_cho"></div><img src="img/new.png" alt="" style="width: 36%;height: 25%;" class="d-none"><div class="d-flex justify-content-end align-items-end mb-2"><a href="#" id="collect_del_icon' + item.Collect_id + '" class="d-none collect_del_icon" data-id="' + item.Collect_id + '"><i class="fa-solid fa-trash-can text-white fa-2x  me-1" ></i></a></div></div></div></div> <div class="text-center mt-1">' + item.Title + '</div><div class="text-center mt-1">' + item.Bl_id + '/' + item.chapter_Chapter + '</div></a></label>';
+                        $("#contact_contact").append(html);
+                    }
+                });
+            } else {
+
+            }
+            //編輯扭開關監聽
+            $("#collect_edit").bind("click", function () {
+                $("#collect_close").removeClass("d-none");
+                $("#collect_close").addClass("d-block");
+                $("#collect_edit").addClass("d-none");
+                data.data.forEach(item => {
+                    $(".check_check" + item.Collect_id).prop('checked', false);
+                    $("#check_check" + item.Collect_id).removeClass("d-none");
+                    // $("#check_check" + item.Collect_id).addClass("d-block");
+                    $("#check_check" + item.Collect_id).css("visibility", "visible");
+                    $("#collect_del_icon" + item.Collect_id).removeClass("d-none");
+                    $("#collect_del_icon" + item.Collect_id).addClass("d-block");
+
+                })
+            })
+            $("#collect_close_1").bind("click", function () {
+                $("#collect_edit").removeClass("d-none");
+                $("#collect_edit").addClass("d-block");
+                $("#collect_close").addClass("d-none");
+                data.data.forEach(item => {
+                    $(".check_check" + item.Collect_id).prop('checked', false);
+                    $("#check_check" + item.Collect_id).removeClass("d-block");
+                    $("#check_check" + item.Collect_id).css("visibility", "hidden");
+                    $("#collect_del_icon" + item.Collect_id).removeClass("d-block");
+                    $("#collect_del_icon" + item.Collect_id).addClass("d-none");
+                    // style="visibility:hidden"/visible
+
+                })
+                return false;
+            })
+            // 刪除按鈕
+            $("#collect_del_btn").bind("click", function () {
+                // console.log(data);
+                if (confirm("確認取消收藏 ?")) {
+                    var book_del_cho = [];
+                    $.each($("input[name='book_del_cho']:checked"), function () {
+                        book_del_cho.push($(this).val());
+                        console.log(book_del_cho.join(","));
+                        Collect_id = book_del_cho.join(",");
+                    });
+                    var jsonDATA = {};
+                    jsonDATA["id"] = Collect_id;
+                    console.log(JSON.stringify(jsonDATA));
+                    $.ajax({
+                        type: "POST",
+                        url: "member_D_collect_api.php",
+                        data: JSON.stringify(jsonDATA),
+                        dataType: "json",
+                        success: showdata_delete,
+                        error: function () {
+                            alert("error_member_D_collect_api.php");
+                        }
+                    });
+                } else {
+                    console.log("not ok");
+                    //關編輯扭
+                    $("#collect_edit").removeClass("d-none");
+                    $("#collect_edit").addClass("d-block");
+                    $("#collect_close").addClass("d-none");
+                    data.data.forEach(item => {
+                        $(".check_check" + item.Collect_id).prop('checked', false);
+                        $("#check_check" + item.Collect_id).removeClass("d-block");
+                        $("#check_check" + item.Collect_id).css("visibility", "hidden");
+                        $("#collect_del_icon" + item.Collect_id).removeClass("d-block");
+                        $("#collect_del_icon" + item.Collect_id).addClass("d-none");
+                        // style="visibility:hidden"/visible
+                    })
+                    return false;
+                }
+            })
+            // 刪除icon
+            $("#contact_contact .collect_del_icon").bind("click", function () {
+                // console.log(data);
+                if (confirm("確認取消收藏 ?")) {
+                    console.log($(this).data("id"));
+                    var jsonDATA = {};
+                    jsonDATA["id"] = $(this).data("id");
+                    console.log(JSON.stringify(jsonDATA));
+                    $.ajax({
+                        type: "POST",
+                        url: "member_D_collect_api.php",
+                        data: JSON.stringify(jsonDATA),
+                        dataType: "json",
+                        success: showdata_delete,
+                        error: function () {
+                            alert("error_member_D_collect_api.php");
+                        }
+                    });
+                } else {
+                    console.log("not ok");
+                    return false;
+                }
+            })
+            //作家專區
+            $("#myubook_R").bind("click", function () {
+                $("#myubook_R").attr("href", "myubook_R.html?id=" + u_id);
+            })
+        }
+        function showdata_updata_password(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                window.location.replace("Home.html")
+            } else {
+                alert(data.message);
+            }
+        }
+        function showdata_updata_email(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                location.reload();
+            } else {
+                alert(data.message);
+            }
+        }
+        function showdata_delete(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                //在原頁面 強迫重新整理
+                //設定頁籤停留
+                // window.location.assign(window.location.href);
+                // return false;
+                // location.hash();
+                // location.reload();
+                location.replace("member_one_center.html?id=" + u_id);
+                // $("#contact-tab").tab('show');
+                // $("#contact").show();
+                // $("#home-tab").removeClass("active");
+                // $("#home-tab").attr("aria-selected", false);
+                // $("#home-tab").attr("tabindex", -1);
+                // $("#contact-tab").addClass("active");
+                // $("#contact-tab").attr("aria-selected", true);
+            } else {
+                alert(data.message);
+                // $("#home-tab").removeClass("active");
+                // $("#home-tab").attr("aria-selected",false);
+                // $("#home-tab").attr("tabindex",-1);
+                // $("#contact-tab").addClass("active");
+                // $("#contact-tab").attr("aria-selected",true);
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>

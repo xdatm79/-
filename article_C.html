@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增章節</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/myall.css">
+    <link rel="stylesheet" href="css/all.min.css">
+</head>
+
+<body>
+    <!-- 頂端 -->
+    <section id="top">
+    </section>
+    <div class=" container mt-5">
+        <div class="demo">
+            <!-- 第一行 -->
+            <div class="row ">
+                <!-- 標題 -->
+                <div class="col-md-10 ">
+                    <div class="row align-items-center ">
+                        <div class="col-md-2 text-center text-md-end mt-md-4 mt-3">
+                            <label for="title">標題</label>
+                        </div>
+                        <div class="col-md-10 mt-md-4 mt-2">
+                            <input type="text" name="title" id="title" class=" form-control">
+                            <div class="form-text" id="err_title"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 第二行 -->
+            <div class="row ">
+                <!-- 內容 -->
+                <div class="col-md-10 ">
+                    <div class="row align-items-center ">
+                        <div class="col-md-2 text-center text-md-end mt-md-4 mt-3">
+                            <label for="content">內容</label>
+                        </div>
+                        <div class="col-md-10 mt-md-4 mt-2">
+                            <textarea type="text" name="content" id="content" class=" form-control"
+                                rows="20"></textarea>
+                            <div class="form-text" id="err_content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 第3行 -->
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <button type="" class="btn btn-outline-primary w-25 me-5" id="uplord_btn">上傳章節</button>
+                    <a href="" class="btn btn-outline-danger w-25" id="back">返回讀取頁</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script src="js/check_member_state.js"></script>
+
+    <script>
+        var u_id;//用戶ID
+        var chapter_Bl_id;
+
+        $(function () {
+            top01();
+            var flag_title = false;
+            var flag_content = false;
+            $("#title").bind("input propertychange", function () {
+                if ($(this).val() != "") {
+                    //符合規則
+                    $("#err_title").html("");
+                    $("#err_title").css("color", "green");
+                    flag_title = true;
+                } else {
+                    $("#err_title").html("不能為空!");
+                    $("#err_title").css("color", "red");
+                    flag_title = false;
+                }
+            });
+
+            $("#content").bind("input propertychange", function () {
+                if ($(this).val() != "") {
+                    //符合規則
+                    $("#err_title").html("");
+                    $("#err_title").css("color", "green");
+                    flag_content = true;
+                } else {
+                    $("#err_content").html("不能為空!");
+                    $("#err_content").css("color", "red");
+                    flag_content = false;
+                }
+            });
+
+            $("#uplord_btn").bind("click", function () {
+                if (flag_title && flag_content) {
+
+                    var jsonDATA = {};
+                    console.log(location.href.split("=")[3]);
+                    chapter_Bl_id = location.href.split("=")[3]
+
+                    jsonDATA["chapter_Bl_id"] = chapter_Bl_id;
+                    jsonDATA["chapter_Title"] = $("#title").val();
+                    jsonDATA["chapter_Content"] = $("#content").val();
+                    console.log(JSON.stringify(jsonDATA));
+
+                    $.ajax({
+                        type: "POST",
+                        url: "article_C_api.php",
+                        dataType: "json",
+                        data: JSON.stringify(jsonDATA),
+                        success: showdata,
+                        error: function () {
+                            alert("err0-article_C_api.php");
+                            window.location.replace("article_R.html?id=" + u_id + "=bl_id=" + chapter_Bl_id);
+                        }
+                    });
+
+                    function showdata(data) {
+                        console.log(data);
+                        window.location.replace("article_R.html?id=" + u_id + "=bl_id=" + chapter_Bl_id)
+                    }
+
+                } else {
+                    alert("欄位有錯誤,請修正後送出!");
+                }
+            });
+
+            $("#back").click(function () {
+                chapter_Bl_id = location.href.split("=")[3]; //取得chapter_Bl_id
+                $("#back").attr("href", "article_R.html?id=" + u_id + "=bl_id=" + chapter_Bl_id)
+            });
+        });
+
+    </script>
+
+
+
+</body>
+
+</html>

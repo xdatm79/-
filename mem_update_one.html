@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員管理系統-單筆會員更新</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/myall.css">
+</head>
+
+<body class="bg-secondary">
+    <!-- 頂端 -->
+    <section id="top">
+    </section>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <div class="card mt-5">
+                    <div class="card-header text-bg-warning fw-500 fs-3 text-center">會員管理系統-單筆會員更新</div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="username" class="form-text">帳號</label>
+                            <input type="text" id="username" name="username" class="form-control" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-text">Email</label>
+                            <input type="email" id="email" name="email" class="form-control">
+                        </div>
+                        <div class="text-center">
+                            <a href="mem_control_panel.html" class="btn btn-outline-warning">取消</a>
+                            <!-- <button class="btn btn-outline-warning" >
+                            </button> -->
+                            <button class="btn btn-warning" id="updata_btn">更新</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script src="js/check_member_state_1.js"></script>
+    <script>
+        var u_id;
+        $(function () {
+            top01();
+            console.log(location.href);
+            console.log(location.href.split("="));
+            console.log(location.href.split("=")[1]);
+            u_id = location.href.split("=")[1]; //取得網址id
+
+            var jsonDATA = {};
+            jsonDATA["id"] = u_id;
+            console.log(JSON.stringify(jsonDATA));
+            $.ajax({
+                type: "POST",
+                url: "mem_select_one_api.php",
+                data: JSON.stringify(jsonDATA),
+                dataType: "json",
+                success: showdata_update,
+                error: function () {
+                    alert("error-mem_select_one_api.php");
+                }
+            });
+
+            //監聽更新按鈕 #updata_btn
+            $("#updata_btn").bind("click", function () {
+                var jsonDATA = {};
+                jsonDATA["id"] = u_id;
+                jsonDATA["email"] = $("#email").val();
+                console.log(JSON.stringify(jsonDATA));
+
+                //傳遞至後端更新
+                $.ajax({
+                    type: "POST",
+                    url: "mem_U_api.php",
+                    data: JSON.stringify(jsonDATA),
+                    dataType: "json",
+                    success: showdata_update02,
+                    error: function () {
+                        alert("error-mem_U_api.php");
+                    }
+                });
+            });
+        });
+
+        function showdata_update(data) {
+            console.log(data);
+            if (data.state) {
+                $("#username").val(data.data.Username);
+                $("#email").val(data.data.Email);
+            } else {
+                alert(data.message);
+                location.href = "mem_control_panel.html";
+            }
+        }
+
+        function showdata_update02(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                location.href = "mem_control_panel.html";
+            } else {
+                alert(data.message);
+            }
+        }
+    </script>
+</body>
+
+</html>

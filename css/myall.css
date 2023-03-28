@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+
+:root {
+    --mycolor01: #d3b7d8;
+    --mycolor02: #a13e97;
+    --mycolor03: #632a7e;
+    --mycolor04: #280e3b;
+    --mycolor05: #57233a;
+    --mycolor06: #eac9a0;
+    --mycolor07: #dab2d3;
+    --mycolor08: #9edae3;
+    --mycolor09: #65c4d8;
+    --mycolor10: #84c0e9;
+    --mycolor11: #f500fd;
+    --mycolor12: #fad2fc;
+    --mycolor13: #a308ac;
+    --mycolor14: #f5d9f7f5;
+    --mycolor15: rgba(255, 255, 255, 0.938);
+    --mycolor16: #d4d3d3;
+    --mycolor17: #535353;
+    --mycolor18: #ab8cff;
+    --mycolor19: #ffc98c;
+    --mycolor20: #2b2824;
+
+}
+.bg-mycolor14{
+    background-color:var(--mycolor14);
+    color: var(--mycolor03);
+}
+.text-mycolor03{
+    /* background-color:var(--mycolor14); */
+    color: var(--mycolor03);
+}
+
+.box {
+    height: 100%;
+    border: 1px solid var(--mycolor02);
+    background-color: var(--mycolor14);
+    /* text-align: center; */
+    /* line-height: 180px; */
+    /* font-size: 36px; */
+    /* font-weight: bolder; */
+    color: var(--mycolor03);
+}
+.box01 {
+    height: 180px;
+    border: 5px solid var(--mycolor02);
+    background-color: var(--mycolor01);
+    text-align: center;
+    line-height: 180px;
+    font-size: 36px;
+    font-weight: bolder;
+    color: var(--mycolor03);
+}
+
+.box02 {
+    height: 140px;
+    border: 5px solid var(--mycolor01);
+    background-color: var(--mycolor09);
+    text-align: center;
+    line-height: 140px;
+    font-size: 36px;
+    font-weight: bolder;
+    color: var(--mycolor11);
+}
+
+.box03 {
+    background-color: var(--mycolor01);
+    padding: 10px;
+}
+
+.box03:hover {
+    background-color: var(--mycolor14);
+    padding: 10px;
+    border: 5px solid var(--mycolor05);
+}
+
+.box04 {
+    height: 280px;
+    border: 5px solid var(--mycolor02);
+    background-color: var(--mycolor01);
+    text-align: center;
+    font-weight: bolder;
+    color: var(--mycolor03);
+    border-radius: 5%;
+}
+
+.mybtn01 {
+    display: block;
+    background-color: var(--mycolor07);
+    border: 2px solid var(--mycolor02);
+    border-radius: 10px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: var(--mycolor05);
+    text-decoration: none;
+}
+
+.mybtn01:hover {
+    color: var(--mycolor11);
+    background-color: var(--mycolor12);
+}
+
+
+.bg-cover {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.demo {
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--mycolor01);
+    border: 2px solid var(--mycolor02);
+}
+
+
+
+.fw-100 {
+    font-weight: 100;
+}
+
+.fw-300 {
+    font-weight: 300;
+}
+
+.fw-400 {
+    font-weight: 400;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+.fw-700 {
+    font-weight: 700;
+}
+
+.fw-900 {
+    font-weight: 900;
+}
+.w-5{
+    width: 5%;
+}
+.w-10{
+    width: 10%;
+}
+.w-15{
+    width: 15%;
+}
+.w-30{
+    width: 30%;
+}
+.w-60{
+    width: 70%;
+}
+.h-20{
+    height: 20%;
+}
+
+
+/* 取消輸入的框框 */
+.search:focus,
+.search:active {
+    outline: none;
+    /* color: black; */
+}
+/* 取消背景按鈕的框框的光暈 */
+.bgc_btn:active,
+.bgc_btn:focus {
+    appearance: none;
+    outline: none;
+    border-color: #d4d3d3;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, .2);
+    color: #d4d3d3;
+}
+
+ /* 首頁圖片輪播 */
+        .carousel-caption {
+            background: rgba(0, 0, 0, 0.3)
+        }

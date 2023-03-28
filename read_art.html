@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>章節列表</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/myall.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <style>
+        /* 取消輸入的框框 */
+        .search:focus,
+        .search:active {
+            outline: none;
+            /* color: black; */
+        }
+
+        .bgc_btn:active,
+        .bgc_btn:focus {
+            appearance: none;
+            outline: none;
+            border-color: #d4d3d3;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, .2);
+            color: #d4d3d3;
+        }
+
+        /* 垂直至中 */
+        .table th,
+        .table td,
+        .middle {
+            vertical-align: middle !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            .table-rwd thead {
+                display: none;
+            }
+
+            .table-rwd tbody tr {
+                display: block;
+                border: 2px solid #aaa;
+                margin-top: 15px;
+            }
+
+            .table-rwd tbody tr td {
+                display: block;
+                overflow: hidden;
+            }
+
+            .table-rwd tbody tr td.aaa {
+                display: none;
+                overflow: hidden;
+            }
+
+            .table-rwd tbody tr td:before {
+                content: attr(data-th) ' ';
+                color: blueviolet;
+                font-weight: 700;
+                width: 17%;
+                float: left;
+                /* 下面是分散對齊用的 最後一航的對其方式 justify是分散對齊*/
+                text-align-last: justify;
+            }
+
+            a {
+                text-decoration: none;
+                color: var(--mycolor03);
+                /* font-weight: 400; */
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 頂端導覽 -->
+    <section id="top">
+    </section>
+    <div class="container mb-5 " id="app">
+        <div class="bg-mycolor14 d-flex align-items-end justify-content-center " @click="blid(read01.chapter_Bl_id)">
+            <a :href="rou">
+                <div class="fs-1 me-3 v-100 mb-0">{{ read01.Title }} </div>
+            </a>
+            <div class="fs-4 mb-2 v-100 mb-0">作者: {{ read01.Author }}</div>
+        </div>
+        <div class="mt-5 box ps-5 pe-5 mb-5">
+            <div class="fs-2 fw-400 mb-2 mt-4">
+                第 {{ read01.chapter_Chapter }}章 {{ read01.chapter_Title }}
+            </div>
+            <div class="mb-5">{{ read01.chapter_Content }}</div>
+        </div>
+        <div class="justify-content-center d-flex">
+            <nav aria-label="Page navigation example ">
+                <ul class="pagination text-center">
+                    <li class="page-item " @click="page(Page-1)" v-if="Page > 0"><a
+                            class="page-link text-mycolor03" :href="rou">上一頁</a></li>
+                    <li class="page-item" @click="blid(read01.chapter_Bl_id)">
+                        <a class=" page-link text-mycolor03" :href="rou">回到目錄</a>
+                    </li>
+                    <li class="page-item" @click.="page1(Page+1)" v-if="Page < allreadtotal-1"><a
+                            class="page-link text-mycolor03" :href="rou">下一頁</a></li>
+                </ul>
+            </nav>
+        </div>
+
+
+
+
+
+    </div>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script src="js/member.js"></script>
+    <script src="js/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+    <script>
+        var App = {
+            data() {
+                return {
+                    read: [],
+                    read01: [],
+                    chapter_ID: '',
+                    rou: '',
+                    bl_id: '',
+                    allread: [],
+                    allreadtotal: [],
+                    Page: 0,//當前頁數陣列值
+
+                }
+            },
+            created() {
+                var vm = this;
+                var url = 'read_art.php';
+                var geturl = window.location.href;
+                var getqyinfo = geturl.split('?')[1];
+                var getbl_id = geturl.split('=')[1];
+                var getchap_id = geturl.split('=')[3];
+                console.log(getbl_id);
+                console.log(getchap_id);
+                vm.bl_id = getbl_id;
+                vm.chapter_ID = getchap_id;
+                axios.post(url, JSON.stringify({
+                    chap_id: vm.chapter_ID,
+                    bl_id: vm.bl_id,
+                })
+                )
+                    .then((res) => {
+                        console.log(res.data);
+                        vm.read = res.data.data;
+                        var aaa = vm.read.length;
+                        vm.read01 = res.data.data[aaa - 1];
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                //讀取全部章數
+                var url01 = 'mem_select_one_article_api.php';
+                axios.post(url01, JSON.stringify({
+                    chap_id: vm.bl_id,
+                })
+                )
+                    .then((res) => {
+                        console.log(res.data);
+                        vm.allread = res.data.data;
+                        var aaa = vm.allread.length;
+                        vm.allreadtotal = aaa;
+                        var newIndex = vm.allread.findIndex((item, index) => {
+                            return vm.chapter_ID == item.chapter_ID
+                        });
+                        console.log(newIndex);
+                        vm.Page = newIndex
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+            },
+            computed: {
+
+            },
+            methods: {
+                blid(item) {
+                    var vm = this;
+                    console.log(item);
+                    vm.chapter_ID = item;
+                    // vm.rou = 'read.html?Bl_id=' +  vm.bl_id + '=chap_id=' + vm.chapter_ID;
+                    vm.rou = 'read.html?Bl_id=' + vm.bl_id;
+                },
+                page(paga) {
+                    console.log(paga);
+                    var vm = this;
+                    // var newIndex = vm.allread.findIndex((item, index) => {
+                    //         return paga == item.chapter_ID
+                    //     });
+                    // console.log(newIndex);
+                    vm.Page = paga
+                    vm.chapter_ID = vm.allread[paga].chapter_ID;
+                    console.log( vm.chapter_ID);
+                    vm.rou = 'read_art.html?Bl_id=' + vm.bl_id +'=chap_id='+vm.chapter_ID;
+                },
+                page1(paga) {
+                    console.log(paga);
+                    var vm = this;
+                    // var newIndex = vm.allread.findIndex((item, index) => {
+                    //         return paga == item.chapter_ID
+                    //     });
+                    // console.log(newIndex);
+                    vm.Page = paga
+                    vm.chapter_ID = vm.allread[paga].chapter_ID;
+                    console.log( vm.chapter_ID);
+                    vm.rou = 'read_art.html?Bl_id=' + vm.bl_id +'=chap_id='+vm.chapter_ID;
+                },
+            }
+        }
+
+
+        Vue.createApp(App).mount('#app');
+
+        $(function () {
+            top01();
+        })
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員管理系統</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/myall.css">
+    <style>
+        @media screen and (max-width: 768px) {
+            .table-rwd thead {
+                display: none;
+            }
+
+            .table-rwd tbody tr {
+                display: block;
+                border: 2px solid #aaa;
+                margin-top: 15px;
+            }
+
+            .table-rwd tbody tr td {
+                display: block;
+            }
+
+            .table-rwd tbody tr td:before {
+                content: attr(data-th) " : ";
+                color: blueviolet;
+                font-weight: 700;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 頂端 -->
+    <section id="top">
+    </section>
+    <div class="container">
+        <div class="row">
+            <!-- <span class="text-warning fw-700 fs-3 me-2 text-end" id="login_member">XXXXX</span> -->
+            <!-- 下面表單--會員管理系統 -->
+            <div class="col-12">
+                <div class="card my-5">
+                    <div class="card-header text-bg-success fw-700 text-center fs-3">會員管理系統</div>
+                    <div class="card-body">
+                        <table class="table table-rwd">
+                            <thead>
+                                <tr>
+                                    <th>編號</th>
+                                    <th>帳號</th>
+                                    <th>Email</th>
+                                    <th>註冊時間</th>
+                                    <th>帳號狀態</th>
+                                    <th>#</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mem_list">
+                                <tr>
+                                    <td data-th="編號">001</td>
+                                    <td data-th="帳號">XX</td>
+                                    <td data-th="Email">XX</td>
+                                    <td data-th="註冊時間">XX</td>
+                                    <td>
+                                        <div class=" form-check form-switch">
+                                            <input type="checkbox" id="u_state" name="u_state" class=" form-check-input"
+                                                role="switch" checked>
+                                            <label for="u_state" class=" form-check-label">啟用</label>
+                                        </div>
+                                    </td>
+                                    <td data-th="功能">
+                                        <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">更新-modal</button>
+                                        <a href="mem_update_one.html?id=XXX" class="btn btn-outline-primary"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal">更新-換頁</a>
+                                        <button class="btn btn-danger">刪除</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- updateModal -->
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-bg-danger">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">會員更新</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="username" class="form-text">帳號</label>
+                        <input type="text" id="username" name="username" class="form-control" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-text">Email</label>
+                        <input type="email" id="email" name="email" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="modal_update_btn">更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script src="js/check_member_state_1.js"></script>
+    <script>
+        var u_id; //for update
+
+        $(function () {
+            top01();
+            
+            // 讀取資料
+            $.ajax({
+                type: "GET",
+                url: "mem_R_api.php",
+                async: false,
+                dataType: "json",
+                success: showdata_R,
+                error: function () {
+                    alert("error-mem_R_api.php");
+                }
+            });
+
+            //監聽table 更新按鈕 #update_btn
+            $("#mem_list #update_btn").bind("click", function () {
+                console.log($(this).data("id"));
+                console.log($(this).data("username"));
+                console.log($(this).data("email"));
+
+                //將data-* 參數 帶入modal畫面
+                $("#username").val($(this).data("username"));
+                $("#email").val($(this).data("email"));
+                u_id = $(this).data("id");
+            });
+
+            //監聽table 刪除按鈕 #delete_btn
+            $("#mem_list #delete_btn").bind("click", function () {
+                if (confirm("確認刪除id: " + $(this).data("id") + "?")) {
+                    console.log($(this).data("id"));
+
+                    //傳遞id至後端api 執行刪除
+                    var jsonData = {};
+                    jsonData["id"] = $(this).data("id");
+                    console.log(JSON.stringify(jsonData));
+
+                    $.ajax({
+                        type: "POST",
+                        url: "mem_D_api.php",
+                        data: JSON.stringify(jsonData),
+                        dataType: "json",
+                        success: showdata_delete,
+                        error: function () {
+                            alert("error-mem_D_api.php");
+                        }
+                    });
+                }
+            });
+
+            //監聽modal 更新按鈕 #modal_update_btn
+            $("#modal_update_btn").bind("click", function () {
+                var jsonData = {};
+                jsonData["id"] = u_id;
+                jsonData["email"] = $("#email").val();
+                console.log(JSON.stringify(jsonData));
+
+                //傳遞至後段執行更新
+                $.ajax({
+                    type: "POST",
+                    url: "mem_U_api.php",
+                    data: JSON.stringify(jsonData),
+                    dataType: "json",
+                    success: showdata_updata,
+                    error: function () {
+                        alert("error-mem_U_api.php");
+                    }
+                });
+
+            });
+
+            //監聽使用者狀態 #u_state
+            $("#mem_list #u_state").change(function () {
+                console.log($(this).is(":checked"));
+                var userState; //紀錄帳號狀態
+                if ($(this).is(":checked")) {
+                    $(this).next().text("啟用");
+                    $(this).next().css("color", "green");
+                    userState = "y";
+                } else {
+                    $(this).next().text("停權");
+                    $(this).next().css("color", "red");
+                    userState = "n";
+                }
+
+                //傳遞狀態至後端更新
+                //{"id":"24", "userState": "y"}
+                var jsonDATA = {};
+                jsonDATA["id"] = $(this).data("id");
+                jsonDATA["userState"] = userState;
+                console.log(JSON.stringify(jsonDATA));
+
+                $.ajax({
+                    type: "POST",
+                    url: "mem_U_userState_api.php",
+                    data: JSON.stringify(jsonDATA),
+                    dataType: "json",
+                    success: showdata_U_userState,
+                    error: function () {
+                        alert("error-mem_U_userState_api.php");
+                    }
+                });
+            });
+
+            //登出按鈕監聽
+            $("#logout_btn").bind("click", function () {
+                setCookie("UID01", "", 7);
+                setCookie("UID02", "", 7);
+                location.href = "Home.html";
+            });
+        });
+
+        function showdata_R(data) {
+            if (data.state) {
+                console.log(data.data);
+                var uStateHTML
+                $("#mem_list").empty();
+                data.data.forEach(function (item) {
+                    // console.log(item.Username);
+                    if (item.userState === "y") {
+                        uStateHTML = '<div class=" form-check form-switch"><input type="checkbox" id="u_state" name="u_state" class=" form-check-input" role="switch" checked data-id= "' + item.ID + '"><label for="u_state" class=" form-check-label" style="color:green" >啟用</label></div>';
+                    } else {
+                        uStateHTML = '<div class=" form-check form-switch"><input type="checkbox" id="u_state" name="u_state" class=" form-check-input" role="switch" data-id= "' + item.ID + '"><label for="u_state" class=" form-check-label " style="color:red">停權</label></div>';
+                    }
+
+
+                    var strHTML = '<tr><td data-th="編號">' + item.ID + '</td><td data-th="帳號">' + item.Username + '</td><td data-th="Email">' + item.Email + '</td><td data-th="註冊時間">' + item.Created_at + '</td><td>' + uStateHTML + '</td><td data-th="功能" class="d-flex"><button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="' + item.ID + '" data-username="' + item.Username + '" data-email="' + item.Email + '" id="update_btn">更新-modal</button><a href="mem_update_one.html?id=' + item.ID + '" class="btn btn-outline-primary me-2" target="_blank">更新-換頁</a><button class="btn btn-danger" data-id="' + item.ID + '" id="delete_btn">刪除</button></td></tr>';
+                    $("#mem_list").append(strHTML);
+                });
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_updata(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                location.href = "mem_control_panel.html";
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_delete(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                location.href = "mem_control_panel.html";
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_U_userState(data) {
+            console.log(data);
+            if (data.state) {
+                // alert(data.message);
+                location.href = "mem_control_panel.html";
+            } else {
+                alert(data.message);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

@@ -316,11 +316,11 @@ function showdata_check_one(data) {
 	}
 }
 function showdata_uid_check(data) {
-	console.log(data)
+	// console.log(data)
 	member = {};
 	member = data
 
-	console.log(member)
+	// console.log(member)
 	if (data.state) {
 
 		id = data.data[0].ID;
@@ -356,27 +356,7 @@ function showdata_uid_check(data) {
 		// } else {
 		// 	alert(data.message);//確認是否登入用訊息
 	}
-	if (data.data[0].Username == "demomap") {
-		$("#link_control02").show();
-		$("#link_control03").show();
-		$("#link_control04").show();
-		$("#link_control05").show();
-		$("#link_control06").show();
-
-		$("#link_control").hide();
-		$("#link_control01").hide();
-		$("#link_control07").hide();
-	} else {
-		$("#link_control02").hide();
-		$("#link_control03").hide();
-		$("#link_control04").hide();
-		$("#link_control05").hide();
-		$("#link_control06").hide();
-
-		$("#link_control").show();
-		$("#link_control01").show();
-		$("#link_control07").show();
-	}
+	
 }
 //form w3c
 function setCookie(cname, cvalue, exdays) {

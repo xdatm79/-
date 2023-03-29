@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/myall.css">
     <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/animate4.11.min.css">
     <style>
         /* 取消輸入的框框 */
         .search:focus,
@@ -94,21 +95,16 @@
         <div class="justify-content-center d-flex">
             <nav aria-label="Page navigation example ">
                 <ul class="pagination text-center">
-                    <li class="page-item " @click="page(Page-1)" v-if="Page > 0"><a
+                    <li class="page-item " @click="page(Page)" v-if="Page > 0"><a
                             class="page-link text-mycolor03" :href="rou">上一頁</a></li>
                     <li class="page-item" @click="blid(read01.chapter_Bl_id)">
                         <a class=" page-link text-mycolor03" :href="rou">回到目錄</a>
                     </li>
-                    <li class="page-item" @click.="page1(Page+1)" v-if="Page < allreadtotal-1"><a
+                    <li class="page-item" @click="page1(Page)" v-if="Page < allreadtotal-1"><a
                             class="page-link text-mycolor03" :href="rou">下一頁</a></li>
                 </ul>
             </nav>
         </div>
-
-
-
-
-
     </div>
     </div>
     <script src="js/bootstrap.bundle.min.js"></script>
@@ -197,7 +193,7 @@
                     //     });
                     // console.log(newIndex);
                     vm.Page = paga
-                    vm.chapter_ID = vm.allread[paga].chapter_ID;
+                    vm.chapter_ID = vm.allread[paga-1].chapter_ID;
                     console.log( vm.chapter_ID);
                     vm.rou = 'read_art.html?Bl_id=' + vm.bl_id +'=chap_id='+vm.chapter_ID;
                 },
@@ -209,7 +205,7 @@
                     //     });
                     // console.log(newIndex);
                     vm.Page = paga
-                    vm.chapter_ID = vm.allread[paga].chapter_ID;
+                    vm.chapter_ID = vm.allread[paga+1].chapter_ID;
                     console.log( vm.chapter_ID);
                     vm.rou = 'read_art.html?Bl_id=' + vm.bl_id +'=chap_id='+vm.chapter_ID;
                 },
@@ -223,7 +219,7 @@
             top01();
         })
     </script>
-
 </body>
+
 
 </html>

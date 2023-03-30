@@ -4,8 +4,6 @@
     <li>會員系統</li>
     <p>1.作品CRUD</p>
     <P>2.收藏CRUD</P>
-    <hr>
     <li>書籍分類</li>
-    <hr>
     <li>數據統計</li>
 </ul>

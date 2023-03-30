@@ -1,6 +1,6 @@
 <?php
     function create_connect(){
-        $link = mysqli_connect("localhost", "id19936188_xdatm79", "Asdzxc?><123456")
+        $link = mysqli_connect("localhost", "id20524484_id19936188_xdatm79", "Asdzxc?><123456")
             or die("連線失敗!".mysqli_connect_error());
         
         return $link;

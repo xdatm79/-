@@ -22,7 +22,7 @@ if (isset($mydata["id"])) {
 
         // $sql = "SELECT * FROM (member LEFT JOIN bl ON member.ID = bl.Mem_id ) LEFT JOIN img ON bl.ID=img.Bl_id LEFT JOIN (select * from  ( SELECT * FROM chapter having 1 order by chapter_Chapter desc) AS b GROUP BY chapter_Bl_id) AS aa ON bl.ID = chapter_Bl_id WHERE member.ID = '$p_id' order by bl.ID";
 
-        $sql = "        SELECT * FROM (member LEFT JOIN bl ON member.ID = bl.Mem_id ) LEFT JOIN (SELECT tags_bl_Bl_id , GROUP_CONCAT(tags_bl.tags_bl_Tags) as 'tags_bl_Tag' FROM tags_bl GROUP BY tags_bl_Bl_id) as dd on tags_bl_Bl_id =bl.ID LEFT JOIN img ON bl.ID=img.Bl_id LEFT JOIN (select * from ( SELECT * FROM chapter having 1 order by CAST(`chapter_Chapter` AS UNSIGNED) desc) AS b GROUP BY chapter_Bl_id) AS aa ON bl.ID = chapter_Bl_id WHERE member.ID = '$p_id' order by bl.ID";
+        $sql = "        SELECT * FROM (member LEFT JOIN bl ON member.ID = bl.Mem_id ) LEFT JOIN (SELECT tags_bl_Bl_id , GROUP_CONCAT(tags_bl.tags_bl_Tags) as 'tags_bl_Tag' FROM tags_bl GROUP BY tags_bl_Bl_id) as dd on tags_bl_Bl_id =bl.ID LEFT JOIN img ON bl.ID=img.Bl_id LEFT JOIN (select * from ( SELECT * FROM chapter having 1 order by CAST(`chapter_Chapter` AS UNSIGNED) desc) AS b GROUP BY chapter_Bl_id) AS aa ON bl.ID = chapter_Bl_id WHERE member.ID = '$p_id' order by bl.ID DESC";
 
 
         // SELECT tags_bl.tags_bl_Bl_id , GROUP_CONCAT(tags_bl.tags_bl_Tags) as 'tags' FROM tags_bl GROUP BY tags_bl.tags_bl_Bl_id;

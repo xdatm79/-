@@ -339,39 +339,7 @@
             u_id = location.href.split("=")[1]; //取得網址id
             window.location.replace("myubook_R.html?id=" + u_id + "");
         }
-        // function showdata_uid_check(data) {
-        //     console.log(data);
-        //     if (data.state) {
-        //         console.log(data.data[0].ID);
-        //         //uid合法 驗證成功
-        //         u_id = location.href.split("=")[1]; //取得網址id
-        //         console.log(u_id);
-        //         //確認是否有權限瀏覽畫面
-        //         if (data.data[0].ID == u_id) {
-        //             // console.log(data)
-        //             $("#login_member").text(data.data[0].Username + "會員您好!");
-
-        //             //顯示登出按鈕
-        //             $("#logout_btn").show();
-
-        //             //顯示會員選項按鈕
-        //             $("#link_control").show();
-        //             $("#link_control01").show();
-        //             $("#link_control02").show();
-        //             $("#link_control03").show();
-
-        //             $("#myulbook_C").attr("href", "myulbook_C.html?id=" + u_id + "");
-
-        //         } else {
-        //             alert("沒有權限!");
-        //             location.href = "Home.html";
-        //         }
-        //     } else {
-        //         //uid 驗證失敗
-        //         alert("請先登入會員!");
-        //         location.href = "Home.html";
-        //     }
-        // }
+        
         function showdata_tags_R(data) {
             console.log(data);
             $(".tags01").empty();

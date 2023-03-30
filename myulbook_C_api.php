@@ -6,29 +6,19 @@ $data = file_get_contents("php://input", "r");
 $jsondata = array();
 $jsondata = json_decode($data, true);
 
-// if (isset($jsondata["title"]) && isset($jsondata["user_id"]) &&  isset($jsondata["author"]) && isset($jsondata["summary"]) && isset($jsondata["tags_id"]) && isset($jsondata["statebl"])) {
-
-if (isset($jsondata["id"]) && isset($jsondata["title"]) &&  isset($jsondata["author"]) && isset($jsondata["summary"]) && isset($jsondata["tags_id"]) &&  isset($jsondata["statebl"])) {
-
-    if ($jsondata["id"] != ""  && $jsondata["title"] != ""  && $jsondata["author"] != "" && $jsondata["summary"] != "" && $jsondata["tags_id"] != "" &&  $jsondata["statebl"] != "") {
-
+if (isset($jsondata["id"]) && isset($jsondata["title"]) && isset($jsondata["author"]) && isset($jsondata["summary"]) && isset($jsondata["tags_id"]) && isset($jsondata["statebl"])) {
+    if ($jsondata["id"] != "" && $jsondata["title"] != "" && $jsondata["author"] != "" && $jsondata["summary"] != "" && $jsondata["tags_id"] != "" && $jsondata["statebl"] != "") {
         $conn = create_connect();
-
         $user_id = $jsondata["id"];
         $title = $jsondata["title"];
         $author = $jsondata["author"];
         $summary = $jsondata["summary"];
         $tags_id = $jsondata["tags_id"];
         $statebl = $jsondata["statebl"];
-        $bl_id ;
-
-
-
-        // $sql = "INSERT INTO bl(User_id, Title, Author, Summary, Tags_id,Statebl) VALUES ( '$user_id' ,' $title','$author','$summary','$tags_id',' $statebl')";
+        $bl_id;
 
         $sql = "INSERT INTO bl( Mem_id,Title, Author, Summary,  Statebl) VALUES (  '$user_id' , '$title','$author','$summary','$statebl')";
         $result = execute_sql($conn, "id20524484_fiction", $sql);
-
         $sql01 = "SELECT ID FROM bl ORDER BY ID DESC LIMIT 0 , 1";
         $result01 = execute_sql($conn, "id20524484_fiction", $sql01);
 
@@ -55,18 +45,20 @@ if (isset($jsondata["id"]) && isset($jsondata["title"]) &&  isset($jsondata["aut
                 // }
                 // print_r($data);  //印陣列
             }
-
-
-            if ($result && $result01 && $result02 ) {
-                echo '{"state": true, "message":"bl新增資料成功!"}';
-            } else {
-                echo '{"state": false, "message":"新增資料失敗!"' . $sql . mysqli_error($conn) . '}';
-            }
-            mysqli_close($conn);
         } else {
-            echo '{"state": false, "message":"欄位不得為空白!"}';
+            $sql02 = "INSERT INTO tags_bl( tags_bl_Bl_id,	tags_bl_Tags) VALUES ( '$bl_id','$tags_id')";
+            $result02 = execute_sql($conn, "id20524484_fiction", $sql02);
         }
+
+        if ($result && $result01 && $result02) {
+            echo '{"state": true, "message":"bl新增資料成功!"}';
+        } else {
+            echo '{"state": false, "message":"新增資料失敗!"' . $sql . mysqli_error($conn) . '}';
+        }
+        mysqli_close($conn);
     } else {
-        echo '{"state": false, "message":"缺少規定欄位!"}';
+        echo '{"state": false, "message":"欄位不得為空白!"}';
     }
+} else {
+    echo '{"state": false, "message":"缺少規定欄位!"}';
 }

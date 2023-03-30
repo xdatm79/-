@@ -21,7 +21,7 @@ if (isset($mydata["ID"]) && isset($mydata["password"]) && isset($mydata["new_pos
 
         //找出相同帳號的資料欄位
         $sql01 = "SELECT Username ,Password,UserState FROM member WHERE ID = '$p_id'";
-        $result01 = execute_sql($link, "id19936188_fiction", $sql01);
+        $result01 = execute_sql($link, "id20524484_fiction", $sql01);
         if (mysqli_num_rows($result01) == 1) {
             $row = mysqli_fetch_assoc($result01);
             $pwd_hash = $row["Password"]; //這Password是資料庫欄位名稱
@@ -34,8 +34,8 @@ if (isset($mydata["ID"]) && isset($mydata["password"]) && isset($mydata["new_pos
                 $uid01 = substr(md5(hash("sha256",date("YmdHis"))),0,6);
                 $uid02 = substr(md5(hash("sha256",uniqid())),0,6);
                 $sql03 = "UPDATE member SET UID01 = '$uid01' ,UID02 = '$uid02' WHERE ID = '$p_id'";
-                execute_sql($link, "id19936188_fiction", $sql);
-                if (execute_sql($link, "id19936188_fiction", $sql03)) {
+                execute_sql($link, "id20524484_fiction", $sql);
+                if (execute_sql($link, "id20524484_fiction", $sql03)) {
                     echo '{"state": true, "message":"密碼更新成功!"}';
                 } else {
                     echo '{"state": false, "message":"密碼更新失敗!"' . mysqli_error($link) . '}';

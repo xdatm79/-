@@ -25,7 +25,7 @@ if(isset($jsondata["username"]) ){
 
         $sql = "SELECT Username FROM member WHERE Username = '$username'";
 
-        $result = execute_sql($conn, "id19936188_fiction", $sql);
+        $result = execute_sql($conn, "id20524484_fiction", $sql);
         
         
         if(mysqli_num_rows($result) == 1){

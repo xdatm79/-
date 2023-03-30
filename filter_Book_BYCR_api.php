@@ -20,7 +20,7 @@ $mydata = json_decode($data, true);
 
         // SELECT Bl_id ,COUNT(Bl_id) as aa FROM `collect` GROUP BY Bl_id ORDER by aa desc;
 
-        $result = execute_sql($link, "id19936188_fiction", $sql);
+        $result = execute_sql($link, "id20524484_fiction", $sql);
 
         if (mysqli_num_rows($result) > 0) {
             //正確找到所對應的資料

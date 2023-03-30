@@ -18,7 +18,7 @@ $mydata = json_decode($data, true);
 
         $sql = "SELECT * FROM bl LEFT JOIN (SELECT tags_bl_Bl_id , GROUP_CONCAT(tags_bl.tags_bl_Tags) as 'tags_bl_Tag' FROM tags_bl GROUP BY tags_bl_Bl_id) as dd on tags_bl_Bl_id =bl.ID LEFT JOIN img ON bl.ID=img.Bl_id LEFT JOIN (select * from ( SELECT * FROM chapter having 1 order by CAST(`chapter_Chapter` AS UNSIGNED) desc) AS b GROUP BY chapter_Bl_id) AS aa ON bl.ID = chapter_Bl_id ORDER BY bl.ID DESC";
 
-        $result = execute_sql($link, "id19936188_fiction", $sql);
+        $result = execute_sql($link, "id20524484_fiction", $sql);
 
         if (mysqli_num_rows($result) > 0) {
             //正確找到所對應的資料

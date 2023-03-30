@@ -21,7 +21,7 @@ if (isset($mydata["id"])) {
         $sql = "SELECT member.UserState ,collect.Collect_id , collect.Mem_id ,collect.Bl_id ,bl.Title, chapter_Chapter , chapter_Title, chapter_Update_at, img.File_img FROM (member LEFT JOIN collect ON member.ID = collect.Mem_id ) LEFT JOIN img ON collect.Bl_id =img.Bl_id LEFT JOIN (select * from ( SELECT * FROM chapter having 1 order by chapter_Update_at desc) AS b GROUP BY chapter_Bl_id) AS aa ON collect.Bl_id = chapter_Bl_id LEFT JOIN bl ON collect.Bl_id = bl.ID WHERE member.ID = '2' order by chapter_Update_at DESC;";
         // select * from  ( SELECT * FROM chapter having 1 order by chapter_Chapter desc) AS b GROUP BY chapter_Bl_id) AS aa
         // select * from ( SELECT * FROM chapter having 1 order by chapter_Update_at desc) AS b
-        $result = execute_sql($link, "id19936188_fiction", $sql);
+        $result = execute_sql($link, "id20524484_fiction", $sql);
 
         if (mysqli_num_rows($result) > 0) {
             //正確找到ID所對應的資料

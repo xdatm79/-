@@ -23,7 +23,7 @@ if (  isset($jsondata["tags_id"]) ) {
         // $sql = "INSERT INTO tags_bl(User_id, Tags_id) VALUES ( '$user_id' ,'$tags_id')";
         $sql = "INSERT INTO tags_bl( Tags_id) VALUES (  '$tags_id')";
 
-        $result = execute_sql($conn, "id19936188_fiction", $sql);
+        $result = execute_sql($conn, "id20524484_fiction", $sql);
 
         if ($result) {
             echo '{"state": true, "message":"新增資料成功!"}';

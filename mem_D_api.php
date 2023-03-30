@@ -17,7 +17,7 @@
             require_once("dbtools.php");
             $link = create_connect();
             $sql = "DELETE FROM member WHERE ID = '$p_id'";
-            $result = execute_sql($link, "id19936188_fiction", $sql);
+            $result = execute_sql($link, "id20524484_fiction", $sql);
             if($result && mysqli_affected_rows($link) == 1){
                 echo '{"state": true, "message":"刪除會員成功!"}';
             }else{

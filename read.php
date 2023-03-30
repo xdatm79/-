@@ -23,7 +23,7 @@ $link = create_connect();
 
 $sql = "SELECT bl.*, chapter.* , img.File_img ,tags_bl_Tag FROM bl LEFT JOIN (SELECT tags_bl_Bl_id , GROUP_CONCAT(tags_bl.tags_bl_Tags) as 'tags_bl_Tag' FROM tags_bl GROUP BY tags_bl_Bl_id) as dd on tags_bl_Bl_id =bl.ID LEFT JOIN img ON bl.ID=img.Bl_id LEFT JOIN chapter ON bl.ID = chapter.chapter_Bl_id WHERE bl.ID = '$id' ";
 
-$result = execute_sql($link, "id19936188_fiction", $sql);
+$result = execute_sql($link, "id20524484_fiction", $sql);
 
 if (mysqli_num_rows($result) > 0) {
     //正確找到ID所對應的資料

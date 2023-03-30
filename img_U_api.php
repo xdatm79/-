@@ -5,7 +5,7 @@ require_once "dbtools.php";
 $conn = create_connect();
 
 $sql = "SELECT ID FROM bl ORDER BY Update_at DESC LIMIT 0 , 1";
-$result = execute_sql($conn, "id19936188_fiction", $sql);
+$result = execute_sql($conn, "id20524484_fiction", $sql);
 
 if (mysqli_num_rows($result) == 1) {
     $row = mysqli_fetch_assoc($result);
@@ -40,7 +40,7 @@ if ($_FILES['myfile01']["name"] != "") {
         
         $sql_01 = "UPDATE img SET File_img ='$location' , Update_at = CURRENT_TIMESTAMP WHERE Bl_id ='$bl_id'";
 
-        $result01 = execute_sql($conn, "id19936188_fiction", $sql_01);
+        $result01 = execute_sql($conn, "id20524484_fiction", $sql_01);
 
         if ($result01) {
             echo '{"state": true, "message":"img更新成功!"}';

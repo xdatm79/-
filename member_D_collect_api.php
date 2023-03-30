@@ -29,7 +29,7 @@ if (isset($mydata["id"])) {
                 $p_id01 = strval($p_id[$i]) . "";
                 // echo $p_id01;
                 $sql = "DELETE FROM collect WHERE Collect_id = '$p_id01'";
-                $result = execute_sql($link, "id19936188_fiction", $sql);
+                $result = execute_sql($link, "id20524484_fiction", $sql);
                 if ($result && mysqli_affected_rows($link) == 1) {
                 $data[] = array_push($data);                
                 }
@@ -45,7 +45,7 @@ if (isset($mydata["id"])) {
             mysqli_close($link);
         } else {
             $sql = "DELETE FROM collect WHERE Collect_id = '$p_id'";
-            $result = execute_sql($link, "id19936188_fiction", $sql);
+            $result = execute_sql($link, "id20524484_fiction", $sql);
             if ($result && mysqli_affected_rows($link) == 1) {
                 echo '{"state": true, "message":"收藏刪除成功!"}';
             } else {

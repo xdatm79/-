@@ -24,7 +24,7 @@ if (isset($dataJson["id"])) {
 
         $sql = "SELECT * FROM chapter WHERE chapter_ID = '$p_id'";
 
-        $result = execute_sql($conn, "id19936188_fiction", $sql);
+        $result = execute_sql($conn, "id20524484_fiction", $sql);
 
         // $line= mysqli_fetch_assoc($result);
 

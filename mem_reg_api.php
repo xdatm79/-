@@ -30,7 +30,7 @@ if(isset($jsondata["username"]) && isset($jsondata["password"]) && isset($jsonda
 
         $sql = "INSERT INTO member(Username,Password,Email) VALUES ('$username','$password','$email')";
 
-        $result = execute_sql($conn, "id19936188_fiction", $sql);
+        $result = execute_sql($conn, "id20524484_fiction", $sql);
         
         
         if($result){

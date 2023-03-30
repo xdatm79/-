@@ -19,7 +19,7 @@ if (isset($mydata["Mem_id"]) && isset($mydata["Bl_id"])) {
         $link = create_connect();
 
         $sql = "SELECT Collect_id FROM collect WHERE Mem_id = '$Mem_id' AND Bl_id ='$Bl_id' ";
-        $result = execute_sql($link, "id19936188_fiction", $sql);
+        $result = execute_sql($link, "id20524484_fiction", $sql);
 
         if (mysqli_num_rows($result) == 1) {
             //找到所對應的資料
@@ -30,7 +30,7 @@ if (isset($mydata["Mem_id"]) && isset($mydata["Bl_id"])) {
             $row = mysqli_fetch_assoc($result);
             $Collect_id = $row["Collect_id"];
             $sql01 = "DELETE FROM collect WHERE Collect_id = '$Collect_id'";
-            $result01 = execute_sql($link, "id19936188_fiction", $sql01);
+            $result01 = execute_sql($link, "id20524484_fiction", $sql01);
             if ($result01 && mysqli_affected_rows($link) == 1) {
                 echo '{"state": true, "message":"取消收藏成功!"}';
             } else {
@@ -39,7 +39,7 @@ if (isset($mydata["Mem_id"]) && isset($mydata["Bl_id"])) {
         } else if (mysqli_num_rows($result) == 0) {
             //查無所對應的資料
             $sql02 = "INSERT INTO collect ( Mem_id , Bl_id) VALUES ('$Mem_id','$Bl_id') ";
-            $result02 = execute_sql($link, "id19936188_fiction", $sql02);
+            $result02 = execute_sql($link, "id20524484_fiction", $sql02);
             if ($result02) {
                 echo '{"state": true, "message":"收藏成功!"}';
             } else {

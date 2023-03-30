@@ -8,7 +8,7 @@
 require_once("dbtools.php");
 $link = create_connect();
 $sql = "SELECT count(*) as total_member FROM member";
-$result = execute_sql($link, "id19936188_fiction", $sql);
+$result = execute_sql($link, "id20524484_fiction", $sql);
 if(mysqli_num_rows($result) > 0){
     $mydata = array();
     while($row = mysqli_fetch_assoc($result)){

@@ -19,7 +19,7 @@ if (isset($mydata["Mem_id"]) && isset($mydata["Bl_id"])) {
         $link = create_connect();
 
         $sql = "SELECT Collect_id FROM collect WHERE Mem_id = '$Mem_id' AND Bl_id ='$Bl_id' ";
-        $result = execute_sql($link, "id19936188_fiction", $sql);
+        $result = execute_sql($link, "id20524484_fiction", $sql);
 
         if (mysqli_num_rows($result) == 1) {
             //找到所對應的資料

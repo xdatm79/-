@@ -17,7 +17,7 @@
             require_once("dbtools.php");
             $link = create_connect();
             $sql = "SELECT ID, Username, Email, Created_at FROM member WHERE ID = '$p_id'";
-            $result = execute_sql($link, "id19936188_fiction", $sql);
+            $result = execute_sql($link, "id20524484_fiction", $sql);
             if(mysqli_num_rows($result) == 1){
                 //正確找到ID所對應的資料
                 $row = mysqli_fetch_assoc($result);

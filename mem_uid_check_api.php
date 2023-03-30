@@ -26,7 +26,7 @@ if(isset($jsondata["uid01"]) && isset($jsondata["uid02"]) ){
 
         $sql = "SELECT ID, Username, Email, UserState, Created_at FROM member WHERE UID01 = '$uid01' AND UID02 = '$uid02'";
 
-        $result = execute_sql($conn, "id19936188_fiction", $sql);
+        $result = execute_sql($conn, "id20524484_fiction", $sql);
         
         
         if(mysqli_num_rows($result) == 1){

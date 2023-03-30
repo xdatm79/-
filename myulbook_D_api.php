@@ -16,7 +16,7 @@ if (isset($jsondata["ID"])) {
 
         $sql = "DELETE FROM bl WHERE ID = '$ID' ";
 
-        $result = execute_sql($conn, "id19936188_fiction", $sql);
+        $result = execute_sql($conn, "id20524484_fiction", $sql);
 
         if ($result && mysqli_affected_rows($conn) == 1) {
             echo '{"state": true, "message":"刪除資料成功!"}';

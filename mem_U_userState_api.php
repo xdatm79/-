@@ -20,7 +20,7 @@
             require_once("dbtools.php");
             $link = create_connect();
             $sql = "UPDATE member SET UserState = '$userState' WHERE ID = '$id'";
-            if(execute_sql($link, "id19936188_fiction", $sql) && mysqli_affected_rows($link) == 1){
+            if(execute_sql($link, "id20524484_fiction", $sql) && mysqli_affected_rows($link) == 1){
                 echo '{"state": true, "message":"更新會員狀態成功!"}';
             }else{
                 echo '{"state": false, "message":"更新會員狀態失敗!"'.mysqli_error($link).'}';

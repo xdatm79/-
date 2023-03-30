@@ -18,7 +18,7 @@ if (isset($jsondata["chapter_ID"]) && isset($jsondata["chapter_Bl_id"])) {
         // $sql01 = " SELECT chapter_ID  FROM chapter WHERE chapter_Bl_id  = '$Bl_id' ORDER BY chapter_Chapter DESC LIMIT 0 , 1";
         $sql01 = "SELECT MAX(chapter_ID) chapter_ID FROM chapter WHERE chapter_Bl_id = '$Bl_id'";
 
-        $result01 = execute_sql($conn, "id19936188_fiction", $sql01);
+        $result01 = execute_sql($conn, "id20524484_fiction", $sql01);
 
         // if (mysqli_num_rows($result01) > 0) {
 
@@ -40,7 +40,7 @@ if (isset($jsondata["chapter_ID"]) && isset($jsondata["chapter_Bl_id"])) {
 
             $sql = "DELETE FROM chapter WHERE chapter_ID = '$ID' ";
 
-            $result = execute_sql($conn, "id19936188_fiction", $sql);
+            $result = execute_sql($conn, "id20524484_fiction", $sql);
 
             if ($result && mysqli_affected_rows($conn) == 1) {
                 echo '{"state": true, "message":"章節刪除成功!"}';

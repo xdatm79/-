@@ -8,7 +8,7 @@
     $link = create_connect();
     //AS -> 後面接要顯示的欄位, num ->自定義名稱, UserState -> 資料庫欄位 , GROUP BY -> 依 XX 欄位做分組
     $sql = "SELECT COUNT(UserState) AS num, UserState FROM member GROUP BY UserState";
-    $result = execute_sql($link, "id19936188_fiction", $sql);
+    $result = execute_sql($link, "id20524484_fiction", $sql);
     if(mysqli_num_rows($result) > 0){
         $mydata = array();
         while($row = mysqli_fetch_assoc($result)){

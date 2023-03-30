@@ -23,7 +23,7 @@ $link = create_connect();
 
 $sql = "SELECT bl.*, chapter.* ,  img.File_img  FROM (member LEFT JOIN bl ON member.ID = bl.Mem_id ) LEFT JOIN img ON bl.ID=img.Bl_id LEFT JOIN chapter ON bl.ID = chapter.chapter_Bl_id WHERE bl.ID = '$id' ";
 
-$result = execute_sql($link, "id19936188_fiction", $sql);
+$result = execute_sql($link, "id20524484_fiction", $sql);
 
 if (mysqli_num_rows($result) > 0) {
     //正確找到ID所對應的資料

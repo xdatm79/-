@@ -4,7 +4,7 @@ require_once "dbtools.php";
 $conn = create_connect();
 
 $sql = "SELECT ID FROM bl ORDER BY ID DESC LIMIT 0 , 1";
-$result = execute_sql($conn, "id19936188_fiction", $sql);
+$result = execute_sql($conn, "id20524484_fiction", $sql);
 
 if (mysqli_num_rows($result) == 1) {
     $row = mysqli_fetch_assoc($result);
@@ -17,7 +17,7 @@ $location;
 if ($_FILES['myfile01']["name"] != "") {
 
     // $sql = "SELECT ID FROM bl ORDER BY ID DESC LIMIT 0 , 1";
-    // $result = execute_sql($conn, "id19936188_fiction", $sql);
+    // $result = execute_sql($conn, "id20524484_fiction", $sql);
 
     if ($_FILES["myfile01"]["error"] > 0) {
         echo "Error: " . $_FILES["myfile01"]["error"] . "";
@@ -50,7 +50,7 @@ if ($_FILES['myfile01']["name"] != "") {
 $sql_01 = "INSERT INTO img( Bl_id ,File_img) VALUES ( '$bl_id','$location')";
 // // $sql_01= "INSERT INTO img( File_img) VALUES ( '$file_img')";
 
-$result01 = execute_sql($conn, "id19936188_fiction", $sql_01);
+$result01 = execute_sql($conn, "id20524484_fiction", $sql_01);
 
 if ($result01) {
     echo '{"state": true, "message":"img新增資料成功!"}';

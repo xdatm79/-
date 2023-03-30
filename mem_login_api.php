@@ -27,7 +27,7 @@ if (isset($jsondata["username"]) && isset($jsondata["password"])) {
         //找出相同帳號的資料欄位
         $sql = "SELECT Username ,Password,UserState FROM member WHERE Username = '$username'";
 
-        $result = execute_sql($conn, "id19936188_fiction", $sql);
+        $result = execute_sql($conn, "id20524484_fiction", $sql);
 
         if (mysqli_num_rows($result) == 1) {
             // 該筆帳號存在
@@ -40,11 +40,11 @@ if (isset($jsondata["username"]) && isset($jsondata["password"])) {
                 $uid01 = substr(md5(hash("sha256",date("YmdHis"))),0,6);
                 $uid02 = substr(md5(hash("sha256",uniqid())),0,6);
                 $sql = "UPDATE member SET UID01 = '$uid01' ,UID02 = '$uid02' WHERE Username = '$username'";
-                execute_sql($conn, "id19936188_fiction", $sql);
+                execute_sql($conn, "id20524484_fiction", $sql);
 
                 //撈取密碼以外的欄位  (權限 是否停權)
                 $sql = "SELECT ID, Username , UserState, UID01, UID02 FROM member WHERE Username = '$username'";
-                $result = execute_sql($conn, "id19936188_fiction", $sql);
+                $result = execute_sql($conn, "id20524484_fiction", $sql);
                 $row = mysqli_fetch_assoc($result);
                 $userData = array();
                 $userData[] = $row;

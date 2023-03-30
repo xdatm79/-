@@ -20,7 +20,7 @@ if (isset($jsondata["chapter_Bl_id"]) && isset($jsondata["chapter_Title"]) && is
         // unsigned表示正整數狀態
         $sql01 = " SELECT chapter_Chapter  FROM chapter WHERE chapter_Bl_id  = '$Bl_id' ORDER BY CAST(`chapter_Chapter` AS UNSIGNED) DESC LIMIT 0 , 1";
 
-        $result01 = execute_sql($conn, "id19936188_fiction", $sql01);
+        $result01 = execute_sql($conn, "id20524484_fiction", $sql01);
         $Chapter = mysqli_fetch_assoc($result01);
 
         if (mysqli_num_rows($result01) > 0) {
@@ -32,7 +32,7 @@ if (isset($jsondata["chapter_Bl_id"]) && isset($jsondata["chapter_Title"]) && is
 
         $sql = "INSERT INTO chapter( chapter_Bl_id,chapter_Chapter, chapter_Title, chapter_Content) VALUES (  '$Bl_id' , '$Chapter','$Title','$Content')";
 
-        $result = execute_sql($conn, "id19936188_fiction", $sql);
+        $result = execute_sql($conn, "id20524484_fiction", $sql);
 
         if ($result) {
             echo '{"state": true, "message":"新增章節成功!"}';

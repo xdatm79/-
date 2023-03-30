@@ -21,7 +21,7 @@ if (isset($mydata["ID"]) && isset($mydata["password"]) && isset($mydata["email"]
 
         //找出相同帳號的資料欄位
         $sql01 = "SELECT Username ,Password,UserState FROM member WHERE ID = '$p_id'";
-        $result01 = execute_sql($link, "id19936188_fiction", $sql01);
+        $result01 = execute_sql($link, "id20524484_fiction", $sql01);
 
         if (mysqli_num_rows($result01) == 1) {
             $row = mysqli_fetch_assoc($result01);
@@ -29,7 +29,7 @@ if (isset($mydata["ID"]) && isset($mydata["password"]) && isset($mydata["email"]
             if (password_verify($password, $pwd_hash)) {
                 //密碼驗證成功
                 $sql = "UPDATE member SET Email = '$p_email' WHERE ID = '$p_id'";
-                if (execute_sql($link, "id19936188_fiction", $sql)) {
+                if (execute_sql($link, "id20524484_fiction", $sql)) {
                     echo '{"state": true, "message":"信箱更新成功!"}';
                 } else {
                     echo '{"state": false, "message":"信箱更新失敗!"' . mysqli_error($link) . '}';

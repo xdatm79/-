@@ -18,7 +18,7 @@ if (isset($jsondata["chapter_ID"]) && isset($jsondata["chapter_Title"]) && isset
 
     $sql = "UPDATE chapter SET  chapter_Title= '$Title', chapter_Content= '$Content', chapter_Update_at = CURRENT_TIMESTAMP WHERE chapter_ID ='$ID' ";
 
-    $result = execute_sql($conn, "id19936188_fiction", $sql);
+    $result = execute_sql($conn, "id20524484_fiction", $sql);
 
     if ($result) {
         echo '{"state": true, "message":"章節修改成功!"}';

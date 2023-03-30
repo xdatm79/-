@@ -22,7 +22,7 @@ if (isset($jsondata["ID"]) &&isset($jsondata["title"]) && isset($jsondata["autho
 
         $sql = "UPDATE bl SET Title = '$title', Author= '$author', Summary= '$summary', Statebl= '$statebl', Update_at = CURRENT_TIMESTAMP WHERE ID ='$ID' ";
 
-        $result = execute_sql($conn, "id19936188_fiction", $sql);
+        $result = execute_sql($conn, "id20524484_fiction", $sql);
 
         if ($result) {
             echo '{"state": true, "message":"小說資料修改成功!"}';
